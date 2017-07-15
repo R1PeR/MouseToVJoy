@@ -1,0 +1,25 @@
+﻿  MouseToVJoy.cpp
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(244): warning C4477: „printf”: ciąg formatu „%S” wymaga argumentu typu „wchar_t *”, ale argument 1 ze zmienną liczbą argumentów ma typ „PVOID”
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(254): warning C4474: „printf”: przekazano za dużo argumentów dla ciągu formatowania
+  c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(254): note: symbole zastępcze i ich parametry oczekują 0 argumentów ze zmienną liczbą argumentów, ale podano następującą liczbę zmiennych argumentów: 1
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(315): warning C4244: "+=": konwersja z "DOUBLE" do "INT", możliwa utrata danych
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(318): warning C4244: "-=": konwersja z "DOUBLE" do "INT", możliwa utrata danych
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(321): warning C4244: "+=": konwersja z "DOUBLE" do "INT", możliwa utrata danych
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(324): warning C4244: "-=": konwersja z "DOUBLE" do "INT", możliwa utrata danych
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(327): warning C4244: "+=": konwersja z "DOUBLE" do "INT", możliwa utrata danych
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(330): warning C4244: "-=": konwersja z "DOUBLE" do "INT", możliwa utrata danych
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(341): warning C4805: "==": niebezpieczne połączenie typu "BOOL" oraz typu "bool" w operacji
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(422): warning C4244: "+=": konwersja z "DOUBLE" do "INT", możliwa utrata danych
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(424): warning C4244: "+=": konwersja z "DOUBLE" do "INT", możliwa utrata danych
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(428): warning C4244: "+=": konwersja z "DOUBLE" do "INT", możliwa utrata danych
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(432): warning C4244: "+=": konwersja z "DOUBLE" do "INT", możliwa utrata danych
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(459): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(242): note: zobacz deklarację „freopen”
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(460): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(242): note: zobacz deklarację „freopen”
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(228): warning C4715: "cInputDevices::CheckKeyPress”: niewszystkie ścieżki kodu zwracają wartość
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(257): warning C4715: "vJoyInput::TestDriver”: niewszystkie ścieżki kodu zwracają wartość
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(282): warning C4715: "vJoyInput::TestVirtualDevices”: niewszystkie ścieżki kodu zwracają wartość
+c:\users\theone\documents\visual studio 2017\projects\vjoyclient\mousetovjoy\mousetovjoy.cpp(294): warning C4715: "vJoyInput::AccuireDevice”: niewszystkie ścieżki kodu zwracają wartość
+  MouseToVJoy.vcxproj -> C:\Users\Theone\Documents\Visual Studio 2017\Projects\vJoyClient\Debug\MouseToVJoy.exe
+  MouseToVJoy.vcxproj -> C:\Users\Theone\Documents\Visual Studio 2017\Projects\vJoyClient\Debug\MouseToVJoy.pdb (Partial PDB)

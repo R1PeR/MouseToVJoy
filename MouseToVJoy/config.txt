@@ -1,0 +1,8 @@
+Sensitivity = 5
+AttackTimeThrottle = 400
+ReleaseTimeThrottle = 400
+AttackTimeBreak = 400
+ReleaseTimeBreak = 400
+AttackTimeClutch = 400
+ReleaseTimeClutch = 400
+

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="input.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="public.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vJoyInput.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vjoyinterface.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{8fe8e660-a3fd-4309-94f0-dc0d2ad981d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{d2b96050-2abd-48e0-a05c-ebaada19a565}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MouseToVJoy.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
