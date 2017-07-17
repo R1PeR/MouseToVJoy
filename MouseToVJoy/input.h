@@ -41,7 +41,6 @@ enum
 	VKey_X,
 	VKey_Y,
 	VKey_Z,
-	VKey_CONTROL
 };
 
 enum
@@ -51,7 +50,6 @@ enum
 	VKey_RightArrow,
 	VKey_DownArrow
 };
-
 class cInputDevices
 {
 public:

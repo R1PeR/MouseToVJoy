@@ -10,5 +10,6 @@ public:
 	int AccuireDevice();
 	void FeedDevice();
 	void AccelerationLogic();
+	void GetKeyAssigned();
 };
 #endif

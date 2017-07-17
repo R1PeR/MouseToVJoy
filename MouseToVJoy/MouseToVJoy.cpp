@@ -16,7 +16,7 @@
 #include <sstream>
 #include <cstdlib>
 #define DEV_ID 1
-DOUBLE VerApp = 1.0;
+DOUBLE VerApp = 1.1;
 
 const char g_szClassName[] = "myWindowClass";
 HWND hwnd;
@@ -33,15 +33,12 @@ INT X = 0;
 INT Y = 0;
 INT Z = 0;
 INT RX = 0;
-
-LONG   Btns = 0;
 PVOID pPositionMessage;
 UINT	IoCode = LOAD_POSITIONS;
 UINT	IoSize = sizeof(JOYSTICK_POSITION);
 // HID_DEVICE_ATTRIBUTES attrib;
-BYTE id = 1;
 UINT iInterface = 1;
-DOUBLE Sensitivity, AttackTimeThrottle, ReleaseTimeThrottle, AttackTimeBreak, ReleaseTimeBreak, AttackTimeClutch, ReleaseTimeClutch;
+DOUBLE Sensitivity, AttackTimeThrottle, ReleaseTimeThrottle, AttackTimeBreak, ReleaseTimeBreak, AttackTimeClutch, ReleaseTimeClutch, ThrottleKey, BreakKey, ClutchKey, MouseLockKey, UseMouse;
 
 //Vjoy
 // Step 4: the Window Procedure
@@ -121,9 +118,6 @@ void cInputDevices::GetData(LPARAM lParam)
 		// So instead of manually typing every possible
 		// case value, we can just start by looping through
 		// an expected range of keys the keycode might be.
-		if (keyCode == 0x11) {
-			pbToKey = &m_baAlphabet[26];
-		}
 
 		for (int iii = 0; iii < 25; ++iii)
 		{
@@ -143,46 +137,8 @@ void cInputDevices::GetData(LPARAM lParam)
 				break;
 			}
 		}
-	
 
-		// However, if the whole for loop above did not find any matches
-		// to the keycode, then we can expect our boolean pointer to be the same
-		// value we initalized it to. Which would be NULL.
 
-		if (pbToKey != NULL)
-		{
-			// if we entered this block of code, then the boolean pointer
-			// is not NULL and has been assigned. The main idea is to
-			// call the CheckKeyPress function to update the boolean pointed to
-			// by the pbToKey, as well as pass in that boolean value itself.
-			*pbToKey = CheckKeyPress(*pbToKey, keyUp);
-
-			// Be sure to return ASAP!
-			return;
-		}
-
-		// If the boolean pointer was null, then before giving up
-		// we can check if the keycode falls in the arrow key range!
-
-		for (int iii = 0; iii < 4; ++iii)
-		{
-			// Notice we add 0x25 to iii,
-			// just like we added 0x41 to iii in the last for loop.
-
-			if (keyCode == iii + 0x25)
-			{
-				// Yay found it!
-				pbToKey = &m_baArrows[iii];
-				break;
-			}
-		}
-
-		// Because the keycode may not match any in the ranges we
-		// so far, we check to see if the boolean
-		// pointer has been assigned anything other than NULL. If 
-		// it is NULL then we do not want to call CheckKeyPress.
-		// The reason for that is, it would error because our pointer
-		// is invalid and CheckKeyPress would be fail.
 		if (pbToKey != NULL)
 		{
 
@@ -294,9 +250,7 @@ int vJoyInput::AccuireDevice() {
 	}
 
 void vJoyInput::FeedDevice() {
-			id = (BYTE)iInterface;
-			iReport.bDevice = id;
-			iReport.bDevice = 1;
+			iReport.bDevice = iInterface;
 			iReport.wAxisX = X;
 			iReport.wAxisY = Y;
 			iReport.wAxisZ = Z;
@@ -307,30 +261,45 @@ void vJoyInput::FeedDevice() {
 				getchar();
 				AcquireVJD(iInterface);
 			}
-
 	}
 
 void vJoyInput::AccelerationLogic() {
-	if (rInput.IsLeftMouseButtonDown() && Y < 32767) {
-		Y += AttackTimeThrottle;
+	if (UseMouse == 1) {
+		if (rInput.IsLeftMouseButtonDown() && Y < 32767) {
+			Y += AttackTimeThrottle;
+		}
+		if (!rInput.IsLeftMouseButtonDown() && Y > 1) {
+			Y -= ReleaseTimeThrottle;
+		}
+		if (rInput.IsRightMouseButtonDown() && Z < 32767) {
+			Z += AttackTimeBreak;
+		}
+		if (!rInput.IsRightMouseButtonDown() && Z > 1) {
+			Z -= ReleaseTimeBreak;
+		}
 	}
-	if (!rInput.IsLeftMouseButtonDown() && Y > 1){
-		Y -= ReleaseTimeThrottle;
+	else {
+		if (rInput.IsAlphabeticKeyDown(ThrottleKey - 0x41) && Y < 32767) {
+			Y += AttackTimeThrottle;
+		}
+		if (!rInput.IsAlphabeticKeyDown(ThrottleKey - 0x41) && Y > 1) {
+			Y -= ReleaseTimeThrottle;
+		}
+		if (rInput.IsAlphabeticKeyDown(BreakKey - 0x41) && Z < 32767) {
+			Z += AttackTimeBreak;
+		}
+		if (!rInput.IsAlphabeticKeyDown(BreakKey - 0x41) && Z > 1) {
+			Z -= ReleaseTimeBreak;
+		}
 	}
-	if (rInput.IsRightMouseButtonDown() && Z < 32767) {
-		Z += AttackTimeBreak;
-	}
-	if (!rInput.IsRightMouseButtonDown() && Z > 1) {
-		Z -= ReleaseTimeBreak;
-	}
-	if (rInput.IsAlphabeticKeyDown(VKey_C - 0x41) && RX < 32767) {
+	if (rInput.IsAlphabeticKeyDown(ClutchKey - 0x41) && RX < 32767) {
 		RX += AttackTimeClutch;
 	}
-	if (!rInput.IsAlphabeticKeyDown(VKey_C - 0x41) && RX > 1) {
+	if (!rInput.IsAlphabeticKeyDown(ClutchKey - 0x41) && RX > 1) {
 		RX -= ReleaseTimeClutch;
 	}
-	if (rInput.IsAlphabeticKeyDown(VKey_O - 0x41)) {
-		SleepEx(250,!(rInput.IsAlphabeticKeyDown(VKey_O - 0x41)));
+	if (rInput.IsAlphabeticKeyDown(MouseLockKey - 0x41)) {
+		SleepEx(250,!(rInput.IsAlphabeticKeyDown(MouseLockKey - 0x41)));
 		if (CursorLocked == false) {
 			CursorLocked = true;
 		}
@@ -380,9 +349,25 @@ void ReadConfigFile() {
 			else if (tmp == "ReleaseTimeClutch") {
 				ReleaseTimeClutch = value;
 			}
+			else if (tmp == "ThrottleKey") {
+				ThrottleKey = value;
+			}
+			else if (tmp == "BreakKey") {
+				BreakKey = value;
+			}
+			else if (tmp == "ClutchKey") {
+				ClutchKey = value;
+			}
+			else if (tmp == "MouseLockKey") {
+				MouseLockKey = value;
+			}
+			else if (tmp == "UseMouse") {
+				UseMouse = value;
+			}
+
 		}
 		std::cout << "==================================\n";
-		std::cout << "Sensitivity = " << Sensitivity << "\n" << "Throttle Attack Time = " << AttackTimeThrottle << "\n" << "Throttle Release Time = " << ReleaseTimeThrottle << "\n" << "Break Attack Time = " << AttackTimeBreak << "\n" << "Break Release Time = " << ReleaseTimeBreak << "\n" << "Clutch Attack Time = " << AttackTimeClutch << "\n" << "Clutch Release Time = " << ReleaseTimeClutch << "\n";
+		std::cout << "Sensitivity = " << Sensitivity << "\n" << "Throttle Attack Time = " << AttackTimeThrottle << "\n" << "Throttle Release Time = " << ReleaseTimeThrottle << "\n" << "Break Attack Time = " << AttackTimeBreak << "\n" << "Break Release Time = " << ReleaseTimeBreak << "\n" << "Clutch Attack Time = " << AttackTimeClutch << "\n" << "Clutch Release Time = " << ReleaseTimeClutch << "\n" << "Throttle key = " << ThrottleKey << "\n" << "Break key = " << BreakKey << "\n" << "Clutch key = " << ClutchKey << "\n" << "Mouse Lock key = " << MouseLockKey << "\n" << "Use Mouse = " << UseMouse << "\n";
 		std::cout << "==================================\n";
 		file_.close();
 	}

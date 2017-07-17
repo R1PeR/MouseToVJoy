@@ -5,4 +5,11 @@ AttackTimeBreak = 400
 ReleaseTimeBreak = 400
 AttackTimeClutch = 400
 ReleaseTimeClutch = 400
+ThrottleKey = 87
+BreakKey = 83
+ClutchKey = 67
+MouseLockKey = 79
+UseMouse = 1
+
+Use keycodes from 65 to 90 (65 for A, 90 for Z)
 
