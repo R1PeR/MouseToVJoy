@@ -277,7 +277,7 @@ void vJoyInput::AccelerationLogic() {
 				Z = (Z + AttackTimeBreak) * AccelerationBreak;
 			}
 			if (!rInput.IsRightMouseButtonDown() && Z > 1) {
-				Z = (Z + ReleaseTimeBreak) / AccelerationBreak;
+				Z = (Z - ReleaseTimeBreak) / AccelerationBreak;
 			}
 		}
 		else {
