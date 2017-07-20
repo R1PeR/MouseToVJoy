@@ -17,7 +17,7 @@
 #include <cstdlib>
 #include <iomanip>
 #define DEV_ID 1
-DOUBLE VerApp = 1.1;
+DOUBLE VerApp = 1.2;
 
 const char g_szClassName[] = "myWindowClass";
 HWND hwnd;
