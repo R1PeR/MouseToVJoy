@@ -15,6 +15,7 @@
 #include <string>
 #include <sstream>
 #include <cstdlib>
+#include <iomanip>
 #define DEV_ID 1
 DOUBLE VerApp = 1.1;
 
@@ -38,7 +39,7 @@ UINT	IoCode = LOAD_POSITIONS;
 UINT	IoSize = sizeof(JOYSTICK_POSITION);
 // HID_DEVICE_ATTRIBUTES attrib;
 UINT iInterface = 1;
-DOUBLE Sensitivity, AttackTimeThrottle, ReleaseTimeThrottle, AttackTimeBreak, ReleaseTimeBreak, AttackTimeClutch, ReleaseTimeClutch, ThrottleKey, BreakKey, ClutchKey, MouseLockKey, UseMouse;
+DOUBLE Sensitivity, AttackTimeThrottle, ReleaseTimeThrottle, AttackTimeBreak, ReleaseTimeBreak, AttackTimeClutch, ReleaseTimeClutch, ThrottleKey, BreakKey, ClutchKey, MouseLockKey, UseMouse, AccelerationThrottle, AccelerationBreak, AccelerationClutch;
 
 //Vjoy
 // Step 4: the Window Procedure
@@ -264,55 +265,53 @@ void vJoyInput::FeedDevice() {
 	}
 
 void vJoyInput::AccelerationLogic() {
-	if (UseMouse == 1) {
-		if (rInput.IsLeftMouseButtonDown() && Y < 32767) {
-			Y += AttackTimeThrottle;
-		}
-		if (!rInput.IsLeftMouseButtonDown() && Y > 1) {
-			Y -= ReleaseTimeThrottle;
-		}
-		if (rInput.IsRightMouseButtonDown() && Z < 32767) {
-			Z += AttackTimeBreak;
-		}
-		if (!rInput.IsRightMouseButtonDown() && Z > 1) {
-			Z -= ReleaseTimeBreak;
-		}
-	}
-	else {
-		if (rInput.IsAlphabeticKeyDown(ThrottleKey - 0x41) && Y < 32767) {
-			Y += AttackTimeThrottle;
-		}
-		if (!rInput.IsAlphabeticKeyDown(ThrottleKey - 0x41) && Y > 1) {
-			Y -= ReleaseTimeThrottle;
-		}
-		if (rInput.IsAlphabeticKeyDown(BreakKey - 0x41) && Z < 32767) {
-			Z += AttackTimeBreak;
-		}
-		if (!rInput.IsAlphabeticKeyDown(BreakKey - 0x41) && Z > 1) {
-			Z -= ReleaseTimeBreak;
-		}
-	}
-	if (rInput.IsAlphabeticKeyDown(ClutchKey - 0x41) && RX < 32767) {
-		RX += AttackTimeClutch;
-	}
-	if (!rInput.IsAlphabeticKeyDown(ClutchKey - 0x41) && RX > 1) {
-		RX -= ReleaseTimeClutch;
-	}
-	if (rInput.IsAlphabeticKeyDown(MouseLockKey - 0x41)) {
-		SleepEx(250,!(rInput.IsAlphabeticKeyDown(MouseLockKey - 0x41)));
-		if (CursorLocked == false) {
-			CursorLocked = true;
+
+		if (UseMouse == 1) {
+			if (rInput.IsLeftMouseButtonDown() && Y < 32767) {
+				Y = (Y + AttackTimeThrottle) * AccelerationThrottle;
+			}
+			if (!rInput.IsLeftMouseButtonDown() && Y > 1) {
+				Y = (Y - ReleaseTimeThrottle) / AccelerationThrottle;;
+			}
+			if (rInput.IsRightMouseButtonDown() && Z < 32767) {
+				Z = (Z + AttackTimeBreak) * AccelerationBreak;
+			}
+			if (!rInput.IsRightMouseButtonDown() && Z > 1) {
+				Z = (Z + ReleaseTimeBreak) / AccelerationBreak;
+			}
 		}
 		else {
-			CursorLocked = false;
+			if (rInput.IsAlphabeticKeyDown(ThrottleKey - 0x41) && Y < 32767) {
+				Y = (Y + AttackTimeThrottle) * AccelerationThrottle;
+			}
+			if (!rInput.IsAlphabeticKeyDown(ThrottleKey - 0x41) && Y > 1) {
+				Y = (Y - AttackTimeThrottle) / AccelerationThrottle;
+			}
+			if (rInput.IsAlphabeticKeyDown(BreakKey - 0x41) && Z < 32767) {
+				Z = (Z + AttackTimeThrottle) * AccelerationBreak;
+			}
+			if (!rInput.IsAlphabeticKeyDown(BreakKey - 0x41) && Z > 1) {
+				Z = (Z - AttackTimeThrottle) / AccelerationBreak;
+			}
 		}
-	}
-	if (CursorLocked == true) {
-		SetCursorPos(0, 0);
-	}
-	else {
-
-	}
+		if (rInput.IsAlphabeticKeyDown(ClutchKey - 0x41) && RX < 32767) {
+			RX = (RX + AttackTimeClutch) * AccelerationClutch;
+		}
+		if (!rInput.IsAlphabeticKeyDown(ClutchKey - 0x41) && RX > 1) {
+			RX = (RX - ReleaseTimeClutch) / AccelerationClutch;
+		}
+		if (rInput.IsAlphabeticKeyDown(MouseLockKey - 0x41)) {
+			SleepEx(250, !(rInput.IsAlphabeticKeyDown(MouseLockKey - 0x41)));
+			if (CursorLocked == false) {
+				CursorLocked = true;
+			}
+			else {
+				CursorLocked = false;
+			}
+		}
+		if (CursorLocked == true) {
+			SetCursorPos(0, 0);
+		}
 }
 
 void ReadConfigFile() {
@@ -324,7 +323,7 @@ void ReadConfigFile() {
 		while (getline(file_, line_)) {
 			std::stringstream ss(line_);
 			std::string tmp;
-			int value;
+			double value;
 			char c;
 			ss >> tmp >> c >> value;
 
@@ -364,10 +363,18 @@ void ReadConfigFile() {
 			else if (tmp == "UseMouse") {
 				UseMouse = value;
 			}
-
+			else if (tmp == "AccelerationThrottle") {
+				AccelerationThrottle = value;
+			}
+			else if (tmp == "AccelerationBreak") {
+				AccelerationBreak = value;
+			}
+			else if (tmp == "AccelerationClutch") {
+				AccelerationClutch = value;
+			}
 		}
 		std::cout << "==================================\n";
-		std::cout << "Sensitivity = " << Sensitivity << "\n" << "Throttle Attack Time = " << AttackTimeThrottle << "\n" << "Throttle Release Time = " << ReleaseTimeThrottle << "\n" << "Break Attack Time = " << AttackTimeBreak << "\n" << "Break Release Time = " << ReleaseTimeBreak << "\n" << "Clutch Attack Time = " << AttackTimeClutch << "\n" << "Clutch Release Time = " << ReleaseTimeClutch << "\n" << "Throttle key = " << ThrottleKey << "\n" << "Break key = " << BreakKey << "\n" << "Clutch key = " << ClutchKey << "\n" << "Mouse Lock key = " << MouseLockKey << "\n" << "Use Mouse = " << UseMouse << "\n";
+		std::cout << "Sensitivity = " << Sensitivity << "\n" << "Throttle Attack Time = " << AttackTimeThrottle << "\n" << "Throttle Release Time = " << ReleaseTimeThrottle << "\n" << "Break Attack Time = " << AttackTimeBreak << "\n" << "Break Release Time = " << ReleaseTimeBreak << "\n" << "Clutch Attack Time = " << AttackTimeClutch << "\n" << "Clutch Release Time = " << ReleaseTimeClutch << "\n" << "Throttle key = " << ThrottleKey << "\n" << "Break key = " << BreakKey << "\n" << "Clutch key = " << ClutchKey << "\n" << "Mouse Lock key = " << MouseLockKey << "\n" << "Use Mouse = " << UseMouse << "\n" << "Acceleration Throttle = " << AccelerationThrottle << "\n" << "Acceleration Break = " << AccelerationBreak << "\n" << "Acceleration Clutch = " << AccelerationClutch << "\n";
 		std::cout << "==================================\n";
 		file_.close();
 	}
