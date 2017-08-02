@@ -17,7 +17,7 @@
 #include <cstdlib>
 #include <iomanip>
 #define DEV_ID 1
-DOUBLE VerApp = 1.2;
+DOUBLE VerApp = 1.3;
 
 const char g_szClassName[] = "myWindowClass";
 HWND hwnd;
@@ -39,7 +39,7 @@ UINT	IoCode = LOAD_POSITIONS;
 UINT	IoSize = sizeof(JOYSTICK_POSITION);
 // HID_DEVICE_ATTRIBUTES attrib;
 UINT iInterface = 1;
-DOUBLE Sensitivity, AttackTimeThrottle, ReleaseTimeThrottle, AttackTimeBreak, ReleaseTimeBreak, AttackTimeClutch, ReleaseTimeClutch, ThrottleKey, BreakKey, ClutchKey, MouseLockKey, UseMouse, AccelerationThrottle, AccelerationBreak, AccelerationClutch;
+DOUBLE Sensitivity, AttackTimeThrottle, ReleaseTimeThrottle, AttackTimeBreak, ReleaseTimeBreak, AttackTimeClutch, ReleaseTimeClutch, ThrottleKey, BreakKey, ClutchKey, MouseLockKey, UseMouse, AccelerationThrottle, AccelerationBreak, AccelerationClutch, MouseCenterKey;
 
 //Vjoy
 // Step 4: the Window Procedure
@@ -264,7 +264,7 @@ void vJoyInput::FeedDevice() {
 			}
 	}
 
-void vJoyInput::AccelerationLogic() {
+void vJoyInput::InputLogic() {
 
 		if (UseMouse == 1) {
 			if (rInput.IsLeftMouseButtonDown() && Y < 32767) {
@@ -309,9 +309,14 @@ void vJoyInput::AccelerationLogic() {
 				CursorLocked = false;
 			}
 		}
+		if (rInput.IsAlphabeticKeyDown(MouseCenterKey - 0x41)) {
+			SleepEx(250, !(rInput.IsAlphabeticKeyDown(MouseCenterKey - 0x41)));
+			X = (32766/2);
+		}
 		if (CursorLocked == true) {
 			SetCursorPos(0, 0);
 		}
+
 }
 
 void ReadConfigFile() {
@@ -372,9 +377,12 @@ void ReadConfigFile() {
 			else if (tmp == "AccelerationClutch") {
 				AccelerationClutch = value;
 			}
+			else if (tmp == "MouseCenterKey") {
+				MouseCenterKey = value;
+			}
 		}
 		std::cout << "==================================\n";
-		std::cout << "Sensitivity = " << Sensitivity << "\n" << "Throttle Attack Time = " << AttackTimeThrottle << "\n" << "Throttle Release Time = " << ReleaseTimeThrottle << "\n" << "Break Attack Time = " << AttackTimeBreak << "\n" << "Break Release Time = " << ReleaseTimeBreak << "\n" << "Clutch Attack Time = " << AttackTimeClutch << "\n" << "Clutch Release Time = " << ReleaseTimeClutch << "\n" << "Throttle key = " << ThrottleKey << "\n" << "Break key = " << BreakKey << "\n" << "Clutch key = " << ClutchKey << "\n" << "Mouse Lock key = " << MouseLockKey << "\n" << "Use Mouse = " << UseMouse << "\n" << "Acceleration Throttle = " << AccelerationThrottle << "\n" << "Acceleration Break = " << AccelerationBreak << "\n" << "Acceleration Clutch = " << AccelerationClutch << "\n";
+		std::cout << "Sensitivity = " << Sensitivity << "\n" << "Throttle Attack Time = " << AttackTimeThrottle << "\n" << "Throttle Release Time = " << ReleaseTimeThrottle << "\n" << "Break Attack Time = " << AttackTimeBreak << "\n" << "Break Release Time = " << ReleaseTimeBreak << "\n" << "Clutch Attack Time = " << AttackTimeClutch << "\n" << "Clutch Release Time = " << ReleaseTimeClutch << "\n" << "Throttle key = " << ThrottleKey << "\n" << "Break key = " << BreakKey << "\n" << "Clutch key = " << ClutchKey << "\n" << "Mouse Lock key = " << MouseLockKey << "\n" << "Mouse Center key = " << MouseCenterKey << "\n" << "Use Mouse = " << UseMouse << "\n" << "Acceleration Throttle = " << AccelerationThrottle << "\n" << "Acceleration Break = " << AccelerationBreak << "\n" << "Acceleration Clutch = " << AccelerationClutch << "\n";
 		std::cout << "==================================\n";
 		file_.close();
 	}
@@ -470,7 +478,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//vjoylogic here
 		Sleep(2);
 
-		vJ.AccelerationLogic();
+		vJ.InputLogic();
 		vJ.FeedDevice();
 
 		if (Msg.message == WM_QUIT || Msg.message == WM_DESTROY)

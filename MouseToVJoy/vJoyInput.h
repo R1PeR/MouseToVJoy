@@ -9,7 +9,6 @@ public:
 	int	TestVirtualDevices();
 	int AccuireDevice();
 	void FeedDevice();
-	void AccelerationLogic();
-	void GetKeyAssigned();
+	void InputLogic();
 };
 #endif
