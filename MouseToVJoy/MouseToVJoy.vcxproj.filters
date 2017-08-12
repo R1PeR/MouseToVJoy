@@ -7,10 +7,16 @@
     <ClInclude Include="public.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="vJoyInput.h">
+    <ClInclude Include="vjoyinterface.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="vjoyinterface.h">
+    <ClInclude Include="fileRead.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vjoy.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="mousetovjoy.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -23,7 +29,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MouseToVJoy.cpp">
+    <ClCompile Include="fileRead.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="vJoy.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="mouseToVjoy.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="cInputDevices.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
