@@ -1,7 +1,9 @@
 #include "mousetovjoy.h"
 #include <iostream>
 #include <math.h>
-DOUBLE CenterMultiplier;
+double CenterMultiplier;
+DOUBLE SteeringMax = 16384, SteeringMin = -16384;
+
 
 void mouseToVjoy::inputLogic(cInputDevices Input, INT &X, INT &Y, INT &Z, INT &RX, DOUBLE AttackTimeThrottle, DOUBLE ReleaseTimeThrottle, DOUBLE AttackTimeBreak, DOUBLE ReleaseTimeBreak, DOUBLE AttackTimeClutch, DOUBLE ReleaseTimeClutch, DOUBLE ThrottleKey, DOUBLE BreakKey, DOUBLE ClutchKey, DOUBLE MouseLockKey, DOUBLE MouseCenterKey, DOUBLE UseMouse, DOUBLE AccelerationThrottle, DOUBLE AccelerationBreak, DOUBLE AccelerationClutch) {
 
@@ -57,14 +59,14 @@ void mouseToVjoy::inputLogic(cInputDevices Input, INT &X, INT &Y, INT &Z, INT &R
 	}
 }
 
-void mouseToVjoy::mouseLogic(cInputDevices Input, INT &X, DOUBLE Sensitivity, DOUBLE &SensitivityCenterReduction, INT UseCenterReduction) {
+void mouseToVjoy::mouseLogic(cInputDevices Input, INT &X, DOUBLE Sensitivity, DOUBLE SensitivityCenterReduction, INT UseCenterReduction) {
 	
 	X = X - 16384;
 	if (X > 0) {
-		CenterMultiplier = pow((DOUBLE)SensitivityCenterReduction, (DOUBLE)(1 - (X / 16384))) ;
+		CenterMultiplier = pow(SensitivityCenterReduction, (1 - (X / SteeringMax))) ;
 	}
 	else if(X < 0){
-		CenterMultiplier = pow((DOUBLE)SensitivityCenterReduction, (DOUBLE)(1 - (X / -16384)));
+		CenterMultiplier = pow(SensitivityCenterReduction, (1 - (X / SteeringMin)));
 	}
 	if (UseCenterReduction == 1) {
 		X = X + ((Input.GetMouseChangeX() * Sensitivity) / CenterMultiplier);
