@@ -1,12 +1,13 @@
 #include "mousetovjoy.h"
 #include <iostream>
 #include <math.h>
-double CenterMultiplier;
+//define center multiplier to be able to modify it during function.
+DOUBLE CenterMultiplier;
+//define maximal value of vjoy axis.
 DOUBLE SteeringMax = 16384, SteeringMin = -16384;
 
 
 void mouseToVjoy::inputLogic(cInputDevices Input, INT &X, INT &Y, INT &Z, INT &RX, DOUBLE AttackTimeThrottle, DOUBLE ReleaseTimeThrottle, DOUBLE AttackTimeBreak, DOUBLE ReleaseTimeBreak, DOUBLE AttackTimeClutch, DOUBLE ReleaseTimeClutch, DOUBLE ThrottleKey, DOUBLE BreakKey, DOUBLE ClutchKey, DOUBLE MouseLockKey, DOUBLE MouseCenterKey, DOUBLE UseMouse, DOUBLE AccelerationThrottle, DOUBLE AccelerationBreak, DOUBLE AccelerationClutch) {
-
 	if (UseMouse == 1) {
 		if (Input.IsLeftMouseButtonDown() && Y < 32767) {
 			Y = (Y + AttackTimeThrottle ) * AccelerationThrottle;
@@ -60,10 +61,10 @@ void mouseToVjoy::inputLogic(cInputDevices Input, INT &X, INT &Y, INT &Z, INT &R
 }
 
 void mouseToVjoy::mouseLogic(cInputDevices Input, INT &X, DOUBLE Sensitivity, DOUBLE SensitivityCenterReduction, INT UseCenterReduction) {
-	
+	//vjoy max value is 0-32767 to make it easier to scale linear reduction/acceleration I subtract half of it so 16384 to make it -16384 to 16384.
 	X = X - 16384;
 	if (X > 0) {
-		CenterMultiplier = pow(SensitivityCenterReduction, (1 - (X / SteeringMax))) ;
+		CenterMultiplier = pow(SensitivityCenterReduction, (1 - (X / SteeringMax)));
 	}
 	else if(X < 0){
 		CenterMultiplier = pow(SensitivityCenterReduction, (1 - (X / SteeringMin)));

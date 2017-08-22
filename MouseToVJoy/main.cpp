@@ -19,7 +19,7 @@ INT X, Y, Z, RX;
 DOUBLE C;
 using namespace std;
 void InitializationCode() {
-	
+	//Code that is run only once, tests vjoy device, reads config file and prints basic out accuired vars.
 	vJ.testDriver();
 	vJ.testVirtualDevices(1);
 	vJ.accuireDevice(1);
@@ -49,6 +49,7 @@ void InitializationCode() {
 	C = fR.result(16);
 }
 void UpdateCode() {
+	//Code that is run every time program gets an message from enviroment(mouse movement, mouse click etc.), manages input logic and feeding device.
 	mTV.inputLogic(rInput, X, Y, Z, RX, fR.result(1), fR.result(2), fR.result(3), fR.result(4), fR.result(5), fR.result(6), fR.result(7), fR.result(8), fR.result(9), fR.result(10), fR.result(11), fR.result(12), fR.result(13), fR.result(14), fR.result(15));
 	vJ.feedDevice(1, X, Y, Z, RX);
 }
@@ -58,6 +59,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	switch (Msg)
 	{
 	case WM_CREATE:
+		//Creating new twi raw input devices
 			RAWINPUTDEVICE m_Rid[2];
 			//Keyboard
 			m_Rid[0].usUsagePage = 1;
@@ -73,6 +75,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 
 		break;
 	case WM_INPUT:
+		//Then window recives input message get data for rinput device and run mouse logic function.
 			rInput.GetData(lParam);
 			mTV.mouseLogic(rInput, X, fR.result(0), C, fR.result(17));
 		break;
@@ -88,6 +91,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	//invisible window initialization to be able to recive raw input even if the window is not focused.
 	static const char* class_name = "DUMMY_CLASS";
 	wc.cbSize = sizeof(WNDCLASSEX);
 	wc.lpfnWndProc = WndProc;        // function which will handle messages
@@ -96,26 +100,28 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (RegisterClassEx(&wc)) {
 		CreateWindowEx(0, class_name, "dummy_name", 0, 0, 0, 0, 0, HWND_MESSAGE, NULL, NULL, NULL);
 	}
+	//Allocating console to process and redirect every stdout, stdin to it.
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout);
 	freopen("CONIN$", "r", stdin);
 	ios::sync_with_stdio();
+	//Show invisible window, update it, then do initialization code.
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
 	InitializationCode();
 	
 
-
+	//Loop on PeekMessage instead of GetMessage to avoid overflow.
 	while (true) {
 		while (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&Msg);
 			DispatchMessage(&Msg);
 		}
-
+		//To optimalize cpu usade wait 2 milisecond before running update code.
 		Sleep(2);
 		UpdateCode();
-
+		//If Message is equal to quit then break loop and end program.
 		if (Msg.message == WM_QUIT || Msg.message == WM_DESTROY)
 		{
 			break;
