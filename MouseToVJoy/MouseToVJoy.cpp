@@ -7,7 +7,7 @@ DOUBLE CenterMultiplier;
 DOUBLE SteeringMax = 16384, SteeringMin = -16384;
 
 
-void mouseToVjoy::inputLogic(cInputDevices Input, INT &X, INT &Y, INT &Z, INT &RX, DOUBLE AttackTimeThrottle, DOUBLE ReleaseTimeThrottle, DOUBLE AttackTimeBreak, DOUBLE ReleaseTimeBreak, DOUBLE AttackTimeClutch, DOUBLE ReleaseTimeClutch, DOUBLE ThrottleKey, DOUBLE BreakKey, DOUBLE ClutchKey, DOUBLE MouseLockKey, DOUBLE MouseCenterKey, DOUBLE UseMouse, DOUBLE AccelerationThrottle, DOUBLE AccelerationBreak, DOUBLE AccelerationClutch) {
+void mouseToVjoy::inputLogic(cInputDevices Input, INT &X, INT &Y, INT &Z, INT &RX, BOOL &BUTTON1, BOOL &BUTTON2, BOOL &BUTTON3, DOUBLE AttackTimeThrottle, DOUBLE ReleaseTimeThrottle, DOUBLE AttackTimeBreak, DOUBLE ReleaseTimeBreak, DOUBLE AttackTimeClutch, DOUBLE ReleaseTimeClutch, DOUBLE ThrottleKey, DOUBLE BreakKey, DOUBLE ClutchKey, DOUBLE GearShiftUpKey, DOUBLE GearShiftDownKey, DOUBLE HandBrakeKey, DOUBLE MouseLockKey, DOUBLE MouseCenterKey, DOUBLE UseMouse, DOUBLE AccelerationThrottle, DOUBLE AccelerationBreak, DOUBLE AccelerationClutch) {
 	if (UseMouse == 1) {
 		if (Input.IsLeftMouseButtonDown() && Y < 32767) {
 			Y = (Y + AttackTimeThrottle ) * AccelerationThrottle;
@@ -23,40 +23,52 @@ void mouseToVjoy::inputLogic(cInputDevices Input, INT &X, INT &Y, INT &Z, INT &R
 		}
 	}
 	else {
-		if (Input.IsAlphabeticKeyDown(ThrottleKey - 0x41) && Y < 32767) {
+		if (Input.IsAlphabeticKeyDown(ThrottleKey) && Y < 32767) {
 			Y = (Y + AttackTimeThrottle) * AccelerationThrottle;
 		}
-		if (!Input.IsAlphabeticKeyDown(ThrottleKey - 0x41) && Y > 1) {
+		if (!Input.IsAlphabeticKeyDown(ThrottleKey) && Y > 1) {
 			Y = (Y - AttackTimeThrottle) / AccelerationThrottle;
 		}
-		if (Input.IsAlphabeticKeyDown(BreakKey - 0x41) && Z < 32767) {
+		if (Input.IsAlphabeticKeyDown(BreakKey) && Z < 32767) {
 			Z = (Z + AttackTimeThrottle) * AccelerationBreak;
 		}
-		if (!Input.IsAlphabeticKeyDown(BreakKey - 0x41) && Z > 1) {
+		if (!Input.IsAlphabeticKeyDown(BreakKey) && Z > 1) {
 			Z = (Z - AttackTimeThrottle) / AccelerationBreak;
 		}
-		}
-		if (Input.IsAlphabeticKeyDown(ClutchKey - 0x41) && RX < 32767) {
-			RX = (RX + AttackTimeClutch) * AccelerationClutch;
-		}
-		if (!Input.IsAlphabeticKeyDown(ClutchKey - 0x41) && RX > 1) {
-			RX = (RX - ReleaseTimeClutch) / AccelerationClutch;
-		}
-		if (Input.IsAlphabeticKeyDown(MouseLockKey - 0x41)) {
-			SleepEx(250, !(Input.IsAlphabeticKeyDown(MouseLockKey - 0x41)));
+	}
+	if (Input.IsAlphabeticKeyDown(ClutchKey) && RX < 32767) {
+		RX = (RX + AttackTimeClutch) * AccelerationClutch;
+	}
+	if (!Input.IsAlphabeticKeyDown(ClutchKey) && RX > 1) {
+		RX = (RX - ReleaseTimeClutch) / AccelerationClutch;
+	}
+	if (Input.IsAlphabeticKeyDown(MouseLockKey)) {
+		SleepEx(250, !(Input.IsAlphabeticKeyDown(MouseLockKey)));
 		if (CursorLocked == false) {
-		CursorLocked = true;
+			CursorLocked = true;
+		}
+		else {
+			CursorLocked = false;
+		}
 	}
-	else {
-	CursorLocked = false;
+	if (Input.IsAlphabeticKeyDown(MouseCenterKey)) {
+		SleepEx(250, !(Input.IsAlphabeticKeyDown(MouseCenterKey)));
+		X = (32766 / 2);
 	}
+	if (Input.IsAlphabeticKeyDown(GearShiftUpKey)) {
+		BUTTON1 = true;
 	}
-	if (Input.IsAlphabeticKeyDown(MouseCenterKey - 0x41)) {
-	SleepEx(250, !(Input.IsAlphabeticKeyDown(MouseCenterKey - 0x41)));
-	X = (32766 / 2);
+	else BUTTON1 = false;
+	if (Input.IsAlphabeticKeyDown(GearShiftDownKey)) {
+		BUTTON2 = true;
 	}
+	else BUTTON2 = false;
+	if (Input.IsAlphabeticKeyDown(HandBrakeKey)){
+		BUTTON3 = true;
+	}
+	else BUTTON3 = false;
 	if (CursorLocked == true) {
-	SetCursorPos(0, 0);
+		SetCursorPos(0, 0);
 	}
 }
 

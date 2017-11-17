@@ -53,7 +53,6 @@ void cInputDevices::GetData(LPARAM lParam)
 
 
 	}
-
 	if (raw->header.dwType == RIM_TYPEKEYBOARD)
 	{
 		// Get key value from the keyboard member (of type RAWKEYBOARD)
@@ -75,25 +74,24 @@ void cInputDevices::GetData(LPARAM lParam)
 		// case value, we can just start by looping through
 		// an expected range of keys the keycode might be.
 
-		for (int iii = 0; iii < 25; ++iii)
+		for (int i = 0; i < 165; ++i)
 		{
 			// We add the hex-code 0x41 because that is the
 			// value MSDN lists for virtual keycode 'A'.
-			if (keyCode == iii + 0x41)
+			if (keyCode == i + 0x01)
 			{
 				// However our alphabet or array of booleans that
 				// represent it, begins at 0 and is only 25 in length.
-				// So iii itself is the appropritate index.
-				pbToKey = &m_baAlphabet[iii];
+				// So i itself is the appropritate index.
+				pbToKey = &m_baKeyboard[i+0x01];
 
 				// At this point we have assigned our boolean pointer variable
-				// a new address which is whatever index iii would be accessing.
+				// a new address which is whatever index i would be accessing.
 				// We break because there is no need to go further since we found the
 				// matching keycode!
 				break;
 			}
 		}
-
 
 		if (pbToKey != NULL)
 		{

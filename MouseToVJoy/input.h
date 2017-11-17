@@ -13,43 +13,6 @@
 // Source page: 
 // http://msdn.microsoft.com/en-us/library/ms645540%28VS.85%29.aspx
 
-enum
-{
-	VKey_A = 0x41,
-	VKey_B,
-	VKey_C,
-	VKey_D,
-	VKey_E,
-	VKey_F,
-	VKey_G,
-	VKey_H,
-	VKey_I,
-	VKey_J,
-	VKey_K,
-	VKey_L,
-	VKey_M,
-	VKey_N,
-	VKey_O,
-	VKey_P,
-	VKey_Q,
-	VKey_R,
-	VKey_S,
-	VKey_T,
-	VKey_U,
-	VKey_V,
-	VKey_W,
-	VKey_X,
-	VKey_Y,
-	VKey_Z,
-};
-
-enum
-{
-	VKey_LeftArrow = 0x25,
-	VKey_UpArrow,
-	VKey_RightArrow,
-	VKey_DownArrow
-};
 class cInputDevices
 {
 public:
@@ -96,14 +59,7 @@ public:
 	// such as VKey_A and subtract 0x41 or make a different enumeration list
 	// for all 25 letters and set the first value to 0.
 
-	bool           IsAlphabeticKeyDown(int nLetter) { return m_baAlphabet[nLetter]; }
-
-	// For ease of use, I seperated detection of Arrow Keys into their own function.
-	// Just like the IsAlphabeticKeyDown function, you can use of the enumerated values
-	// such as VKey_LeftArrow and but subtract 0x25 or make a different enumeration list
-	// for all 4 arrow directions and set the first value to 0.
-
-	bool           IsArrowKeyDown(int nArrowDirection) { return m_baArrows[nArrowDirection]; }
+	bool           IsAlphabeticKeyDown(int nLetter) { return m_baKeyboard[nLetter]; }
 
 private:
 
@@ -128,8 +84,7 @@ private:
 	// Notice how I use an array of bools rather than having a separate bool for each.
 	// In the source file you will see how my enumerations come into play for knowing what index
 	// to access.
-	bool           m_baAlphabet[25];
-	bool           m_baArrows[4];
+	bool           m_baKeyboard[166];
 
 	// The CheckKeyPress function is because of these issues:
 

@@ -7,6 +7,7 @@
 #include "input.h"
 
 
+
 const char g_szClassName[] = "myWindowClass";
 HWND hwnd;
 WNDCLASSEX wc;
@@ -16,7 +17,9 @@ mouseToVjoy mTV;
 cInputDevices rInput;
 fileRead fR;
 INT X, Y, Z, RX;
-DOUBLE C;
+BOOL BUTTON1, BUTTON2, BUTTON3;
+string keyCodeName;
+
 using namespace std;
 void InitializationCode() {
 	//Code that is run only once, tests vjoy device, reads config file and prints basic out accuired vars.
@@ -24,8 +27,9 @@ void InitializationCode() {
 	vJ.testVirtualDevices(1);
 	vJ.accuireDevice(1);
 	string fileName = "config.txt";
-	string checkArray[18] = {"Sensitivity", "AttackTimeThrottle", "ReleaseTimeThrottle", "AttackTimeBreak", "ReleaseTimeBreak", "AttackTimeClutch", "ReleaseTimeClutch", "ThrottleKey", "BreakKey", "ClutchKey", "MouseLockKey", "MouseCenterKey", "UseMouse", "AccelerationThrottle", "AccelerationBreak", "AccelerationClutch", "CenterMultiplier", "UseCenterReduction"};
+	string checkArray[21] = {"Sensitivity", "AttackTimeThrottle", "ReleaseTimeThrottle", "AttackTimeBreak", "ReleaseTimeBreak", "AttackTimeClutch", "ReleaseTimeClutch", "ThrottleKey", "BreakKey", "ClutchKey", "GearShiftUpKey", "GearShiftDownKey", "HandBrakeKey", "MouseLockKey", "MouseCenterKey", "UseMouse","UseCenterReduction" , "AccelerationThrottle", "AccelerationBreak", "AccelerationClutch", "CenterMultiplier"};
 	fR.newFile(fileName, checkArray);
+
 	printf("==================================\n");
 	printf("Sensitivity = %.2f \n",fR.result(0));
 	printf("Throttle Attack Time = %.0f \n", fR.result(1));
@@ -34,24 +38,26 @@ void InitializationCode() {
 	printf("Break Release Time = %.0f \n", fR.result(4));
 	printf("Clutch Attack Time = %.0f \n", fR.result(5));
 	printf("Clutch Release Time = %.0f \n", fR.result(6));
-	printf("Throttle key = %.0f \n", fR.result(7));
-	printf("Break key = %.0f \n", fR.result(8));
-	printf("Clutch key = %.0f \n", fR.result(9));
-	printf("Mouse Lock key = %.0f \n", fR.result(10));
-	printf("Mouse Center key = %.0f \n", fR.result(11));
-	printf("Use Mouse = %.0f \n", fR.result(12));
-	printf("Use Center Reduction = %0.0f \n", fR.result(17));
-	printf("Acceleration Throttle = %.2f \n", fR.result(13));
-	printf("Acceleration Break = %.2f \n", fR.result(14));
-	printf("Acceleration Clutch = %.2f \n", fR.result(15));
-	printf("Center Multiplier = %.2f \n", fR.result(16));
-	cout << "==================================\n";
-	C = fR.result(16);
+	printf("Throttle key = %d \n", (int)fR.result(7));
+	printf("Break key = %d \n", (int)fR.result(8));
+	printf("Clutch key = %d \n", (int)fR.result(9));
+	printf("Gear Shift Up key = %d \n", (int)fR.result(10));
+	printf("Gear Shift Down key = %d \n", (int)fR.result(11));
+	printf("Hand Brake Key = %d \n", (int)fR.result(12));
+	printf("Mouse Lock key = %d \n", (int)fR.result(13));
+	printf("Mouse Center key = %d \n", (int)fR.result(14));
+	printf("Use Mouse = %d \n", (int)fR.result(15));
+	printf("Use Center Reduction = %d \n", (int)fR.result(16));
+	printf("Acceleration Throttle = %.2f \n", fR.result(17));
+	printf("Acceleration Break = %.2f \n", fR.result(18));
+	printf("Acceleration Clutch = %.2f \n", fR.result(19));
+	printf("Center Multiplier = %.2f \n", fR.result(20));
+	printf("==================================\n");
 }
 void UpdateCode() {
 	//Code that is run every time program gets an message from enviroment(mouse movement, mouse click etc.), manages input logic and feeding device.
-	mTV.inputLogic(rInput, X, Y, Z, RX, fR.result(1), fR.result(2), fR.result(3), fR.result(4), fR.result(5), fR.result(6), fR.result(7), fR.result(8), fR.result(9), fR.result(10), fR.result(11), fR.result(12), fR.result(13), fR.result(14), fR.result(15));
-	vJ.feedDevice(1, X, Y, Z, RX);
+	mTV.inputLogic(rInput, X, Y, Z, RX, BUTTON1, BUTTON2, BUTTON3, fR.result(1), fR.result(2), fR.result(3), fR.result(4), fR.result(5), fR.result(6), fR.result(7), fR.result(8), fR.result(9), fR.result(10), fR.result(11), fR.result(12), fR.result(13), fR.result(14),fR.result(16), fR.result(17), fR.result(18), fR.result(19));
+	vJ.feedDevice(1, X, Y, Z, RX, BUTTON1, BUTTON2, BUTTON3);
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam)
@@ -77,7 +83,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	case WM_INPUT:
 		//Then window recives input message get data for rinput device and run mouse logic function.
 			rInput.GetData(lParam);
-			mTV.mouseLogic(rInput, X, fR.result(0), C, fR.result(17));
+			mTV.mouseLogic(rInput, X, fR.result(0), fR.result(20), fR.result(16));
 		break;
 	case WM_CLOSE:
 		PostQuitMessage(0);
@@ -121,6 +127,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//To optimalize cpu usade wait 2 milisecond before running update code.
 		Sleep(2);
 		UpdateCode();
+		//	if (BUTTON1) printf("btn1\n"); DEBUG
+		//	if (BUTTON2) printf("btn2\n"); DEBUG
 		//If Message is equal to quit then break loop and end program.
 		if (Msg.message == WM_QUIT || Msg.message == WM_DESTROY)
 		{

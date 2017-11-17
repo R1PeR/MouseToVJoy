@@ -17,7 +17,7 @@ using namespace std;
   then it checks if /string name/ is equal to any string from checkArray, then parses it into resultArray.
   Result order is the same as checkArray order.
   Eg. checkArray = "Sensitivity, Multiplier, Divider" then no matter the order in file,
-  output will be restultArray[Sensitivity, Multiplier, Divider].
+  output will be restultArray[Sensitivity, Multiplier, Divider etc.].
   To acces result just use funtion result[number] eg. result[0] for Sensitivity.
 */
 class fileRead{

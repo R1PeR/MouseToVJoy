@@ -3,10 +3,10 @@
 
 int vJoy::testDriver() {
 
-	printf("Assetto Corsa Mouse to vJoy Feeder\n");
+	printf("Mouse to vJoy Feeder\n");
 	printf("==================================\n");
 	printf("Author: R1per\n");
-	printf("Version: 1.4\n");
+	printf("Version: 1.5\n");
 	// Get the driver attributes (Vendor ID, Product ID, Version Number)
 	if (!vJoyEnabled())
 	{
@@ -67,12 +67,15 @@ int vJoy::accuireDevice(UINT iInterface) {
 		printf("Acquired: vJoy device number %d.\n", iInterface);
 }
 
-void vJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX) {
+void vJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3) {
 	iReport.bDevice = iInterface;
 	iReport.wAxisX = X;
 	iReport.wAxisY = Y;
 	iReport.wAxisZ = Z;
 	iReport.wAxisXRot = RX;
+	if (BUTTON1) iReport.lButtons |= 0x1; else iReport.lButtons &= 0xFE;
+	if (BUTTON2) iReport.lButtons |= 0x2; else iReport.lButtons &= 0xFD;
+	if (BUTTON3) iReport.lButtons |= 0x4; else iReport.lButtons &= 0xFB;
 	if (!UpdateVJD(iInterface, (PVOID)&iReport))
 	{
 		printf("Feeding vJoy device number %d failed - try to enable device then press enter\n", iInterface);

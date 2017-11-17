@@ -1,24 +1,24 @@
-Sensitivity = 40
-AttackTimeThrottle = 100
+Sensitivity = 6
+AttackTimeThrottle = 50
 ReleaseTimeThrottle = 100
 AttackTimeBreak = 100
 ReleaseTimeBreak = 100
-AttackTimeClutch = 100
-ReleaseTimeClutch = 100
+AttackTimeClutch = 200
+ReleaseTimeClutch = 200
 ThrottleKey = 87
 BreakKey = 69
 ClutchKey = 67
-MouseLockKey = 79
-MouseCenterKey = 80
+GearShiftUpKey = 83
+GearShiftDownKey = 68
+HandBrakeKey = 32
+MouseLockKey = 0
+MouseCenterKey = 0
 UseMouse = 1
 UseCenterReduction = 1
 AccelerationThrottle = 1.01
 AccelerationBreak = 1.01
 AccelerationClutch = 1.01
-CenterMultiplier = 1.1
+CenterMultiplier = 1.2
 
-Acceleration works like this: X = (X + AttackTime) * Acceleration, X = (X - ReleaseTime) / Acceleration
-If you want raw acceleration use 1 for time variables and scale acceleration
-If you dont want acceleration set it to 1 and use linear time values
-Use keycodes from 65 to 90 (65 for A, 90 for Z)
-
+Use keycodes from 0 TO 165
+http://keycode.info
