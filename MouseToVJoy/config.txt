@@ -1,5 +1,5 @@
 Sensitivity = 6
-AttackTimeThrottle = 50
+AttackTimeThrottle = 100
 ReleaseTimeThrottle = 100
 AttackTimeBreak = 100
 ReleaseTimeBreak = 100

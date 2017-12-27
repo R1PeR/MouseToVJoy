@@ -62,7 +62,7 @@ enum VjdStat  /* Declares an enumeration data type */
 
 // Device Axis/POVs/Buttons
 struct DEVCTRLS {
-	BOOL	Init;
+	BOOL Init;
 	BOOL	Rudder;
 	BOOL	Aileron;
 	BOOL	AxisX;

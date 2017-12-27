@@ -1,0 +1,27 @@
+﻿  main.cpp
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\main.cpp(114): warning C4244: "argument": konwersja z "double" do "INT", możliwa utrata danych
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\main.cpp(140): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(242): note: zobacz deklarację „freopen”
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\main.cpp(141): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(242): note: zobacz deklarację „freopen”
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\main.cpp(504): warning C4244: "argument": konwersja z "LONG" do "BYTE", możliwa utrata danych
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\main.cpp(505): warning C4244: "argument": konwersja z "LONG" do "BYTE", możliwa utrata danych
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\main.cpp(506): warning C4244: "argument": konwersja z "LONG" do "BYTE", możliwa utrata danych
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\main.cpp(528): warning C4244: "argument": konwersja z "LONG" do "BYTE", możliwa utrata danych
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\main.cpp(550): warning C4244: "argument": konwersja z "LONG" do "BYTE", możliwa utrata danych
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\main.cpp(551): warning C4244: "argument": konwersja z "LONG" do "BYTE", możliwa utrata danych
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\main.cpp(431): warning C4996: 'Ffb_h_Eff_Report': ** Ffb_h_Eff_Const function was deprecated - Use function Ffb_h_Eff_Report **
+  c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\vjoyinterface.h(345): note: zobacz deklarację „Ffb_h_Eff_Report”
+  Generowanie kodu...
+  Trwa kompilowanie...
+  vJoy.cpp
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\vjoy.cpp(18): warning C4477: „printf”: ciąg formatu „%S” wymaga argumentu typu „wchar_t *”, ale argument 1 ze zmienną liczbą argumentów ma typ „PVOID”
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\vjoy.cpp(28): warning C4474: „printf”: przekazano za dużo argumentów dla ciągu formatowania
+  c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\vjoy.cpp(28): note: symbole zastępcze i ich parametry oczekują 0 argumentów ze zmienną liczbą argumentów, ale podano następującą liczbę zmiennych argumentów: 1
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\vjoy.cpp(73): warning C4996: 'FfbStart': ** FfbStart function was deprecated - you can remove it from your code **
+  c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\vjoyinterface.h(332): note: zobacz deklarację „FfbStart”
+  Generowanie kodu...
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\vjoy.cpp(69): warning C4715: "vJoy::accuireDevice”: niewszystkie ścieżki kodu zwracają wartość
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\vjoy.cpp(30): warning C4715: "vJoy::testDriver”: niewszystkie ścieżki kodu zwracają wartość
+c:\users\lenovo\documents\github\mousetovjoy\mousetovjoy\vjoy.cpp(55): warning C4715: "vJoy::testVirtualDevices”: niewszystkie ścieżki kodu zwracają wartość
+  MouseToVJoy.vcxproj -> C:\Users\Lenovo\Documents\GitHub\mousetovjoy\Debug\MouseToVJoy.exe
