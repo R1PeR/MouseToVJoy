@@ -21,6 +21,7 @@ fileRead fR;
 INT X, Y, Z, RX;
 BOOL BUTTON1, BUTTON2, BUTTON3;
 string keyCodeName;
+INT ffbSize = 0;
 
 using namespace std;
 void InitializationCode() {
@@ -45,14 +46,15 @@ void InitializationCode() {
 
 	void CALLBACK FfbFunction1(PVOID data, PVOID userdata);
 
-	
+	void CALLBACK FfbToVjoy(PVOID data, PVOID userdata);
+
 	UINT DevID = 1;
 	
 	vJ.testDriver();
 	vJ.testVirtualDevices(DevID);
 	vJ.accuireDevice(DevID);
 	vJ.enableFFB(DevID);
-	FfbRegisterGenCB(FfbFunction1, &DevID);
+	FfbRegisterGenCB(FfbToVjoy, &DevID);
 
 	string fileName = "config.txt";
 	string checkArray[21] = {"Sensitivity", "AttackTimeThrottle", "ReleaseTimeThrottle", "AttackTimeBreak", "ReleaseTimeBreak", "AttackTimeClutch", "ReleaseTimeClutch", "ThrottleKey", "BreakKey", "ClutchKey", "GearShiftUpKey", "GearShiftDownKey", "HandBrakeKey", "MouseLockKey", "MouseCenterKey", "UseMouse","UseCenterReduction" , "AccelerationThrottle", "AccelerationBreak", "AccelerationClutch", "CenterMultiplier"};
@@ -85,7 +87,8 @@ void InitializationCode() {
 void UpdateCode() {
 	//Code that is run every time program gets an message from enviroment(mouse movement, mouse click etc.), manages input logic and feeding device.
 	mTV.inputLogic(rInput, X, Y, Z, RX, BUTTON1, BUTTON2, BUTTON3, fR.result(1), fR.result(2), fR.result(3), fR.result(4), fR.result(5), fR.result(6), fR.result(7), fR.result(8), fR.result(9), fR.result(10), fR.result(11), fR.result(12), fR.result(13), fR.result(14),fR.result(16), fR.result(17), fR.result(18), fR.result(19));
-	vJ.feedDevice(1, X, Y, Z, RX, BUTTON1, BUTTON2, BUTTON3);
+	X = X + ffbSize;
+	vJ.feedDevice(1, X, Y, Z, RX, BUTTON1, BUTTON2, BUTTON3, &ffbSize);
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam)
@@ -559,4 +562,30 @@ void CALLBACK FfbFunction1(PVOID data, PVOID userdata)
 
 }
 
+void CALLBACK FfbToVjoy(PVOID data, PVOID userdata) {
+		// Packet Header
+		//printf("\n ============= FFB Packet size Size %d =============\n", static_cast<int>(((FFB_DATA *)data)->size));
 
+		/////// Packet Device ID, and Type Block Index (if exists)
+#pragma region Packet Device ID, and Type Block Index
+		int DeviceID, BlockIndex;
+		FFBPType	Type;
+		TCHAR	TypeStr[100];
+
+#pragma region Effect Report
+		FFB_EFF_CONST Effect;
+		if (ERROR_SUCCESS == Ffb_h_Eff_Report((FFB_DATA *)data, &Effect))
+		{
+			printf("\n");
+			//FfbFunction(data);
+			//printf("\n ====================================================\n");
+
+			if (Polar2Deg(Effect.Direction) > 100) {
+				ffbSize = 0;
+			}
+			else {
+				ffbSize = 0;
+			}
+			printf("ForceFeedBack is equal to: %ld and degrees to: %d", NULL, Polar2Deg(Effect.Direction));
+		}
+}

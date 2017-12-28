@@ -25,7 +25,7 @@ int vJoy::testDriver() {
  vJoyInterface DLL (version %04x)\n", VerDrv, VerDll);
 	else
 		printf("vJoyInterface DLL Version: %04x\n", VerDrv);
-	printf("OK - Driver and DLL match\n", VerDrv);
+	printf("OK - Driver and DLL match\n");
 
 }
 
@@ -80,7 +80,7 @@ int vJoy::enableFFB(UINT iInterface) {
 	return 0;
 }
 
-void vJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3) {
+void vJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3, INT *FFBSIZE) {
 	iReport.bDevice = iInterface;
 	iReport.wAxisX = X;
 	iReport.wAxisY = Y;
