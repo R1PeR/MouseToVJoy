@@ -14,6 +14,7 @@ https://sourceforge.net/projects/vjoystick/files/Beta%202.x/
 ## Configuration
 
 Program can be configured through config.txt file, which have 21 different values, that can be modified through any text editor.
+For easier tweaking use VjoyMonitor to visualize axis changes.
 
 ### Sensitivity
 
