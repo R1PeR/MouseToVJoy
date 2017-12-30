@@ -10,6 +10,7 @@ Simple application that converts mouse/keyboard input to vjoy output, created us
 Windows:
 
 Open MouseToVJoy.exe
+
 Enjoy.
 
 ## Usage example
