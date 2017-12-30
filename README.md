@@ -4,7 +4,7 @@ Application that converts mouse/keyboard input to vjoy output.
 
 ## Getting Started
 
-Simply launch application, it will automaticly start feeding data to vjoy.
+Simply launch application, it will automaticly start feeding data to Vjoy device if exist.
 
 ### Prerequisites
 
