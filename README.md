@@ -19,6 +19,7 @@ Program can be configured through config.txt file, which have 21 different value
 
 The main sensitivity multiplier.
 Raw data from mouse is multiplied by this value and then added to Vjoy Axis. 
+
 E.g. Sensitivity = 1.0
 
 ### AttackTimeThrottle
@@ -37,7 +38,6 @@ The greater the steaper slope of release.
 
 E.g. ReleaseTimeThrottle = 100
 
-
 ### AttackTimeBreak
 
 Break value when pressed.
@@ -45,7 +45,6 @@ When break is pressed, every 2 ms value is added to Vjoy Axis.
 The greater the steaper slope of attack.
 
 E.g. AttackTimeBreak = 100
-
 
 ### ReleaseTimeBreak
 
@@ -55,7 +54,6 @@ The greater the steaper slope of release.
 
 E.g. ReleaseTimeBreak = 100
 
-
 ### AttackTimeClutch
 
 Clutch value when pressed.
@@ -64,7 +62,6 @@ The greater the steaper slope of attack.
 
 E.g. AttackTimeClutch = 100
 
-
 ### ReleaseTimeClutch
 
 Clutch value when released.
@@ -72,7 +69,6 @@ When clutch is released, every 2 ms value is subtracted from Vjoy Axis.
 The greater the steaper slope of release.
 
 E.g. ReleaseTimeClutch = 100
-
 
 ### ThrottleKey
 
@@ -88,14 +84,12 @@ Key value can be anything from 0 to 165 in ASCII KEYCODES!
 
 E.g. BreakKey = 69 for "E"
 
-
 ### ClutchKey
 
 Key responsible for clutch control.
 Key value can be anything from 0 to 165 in ASCII KEYCODES!
 
 E.g. ClutchKey = 67 for "C"
-
 
 ### GearShiftUpKey
 
@@ -104,14 +98,12 @@ Key value can be anything from 0 to 165 in ASCII KEYCODES!
 
 E.g. GearShiftUpKey = 83 for "D"
 
-
 ### GearShiftDownKey
 
 Key responsible for gear shift down.
 Key value can be anything from 0 to 165 in ASCII KEYCODES!
 
 E.g. GearShiftDownKey = 68 for "S"
-
 
 ### HandBrakeKey
 
@@ -120,7 +112,6 @@ Key value can be anything from 0 to 165 in ASCII KEYCODES!
 
 E.g. HandBrakeKey = 32 for Space
 
-
 ### MouseLockKey
 
 Key responsible for locking mouse in 0,0 coordinates on monitor.
@@ -128,14 +119,12 @@ Key value can be anything from 0 to 165 in ASCII KEYCODES!
 
 E.g. MouseLockKey = 80 for "P"
 
-
 ### MouseCenterKey
 
 Key responsible for centering Steering Vjoy Axis.
 Key value can be anything from 0 to 165 in ASCII KEYCODES!
 
 E.g. MouseCenterKey = 79 for "0"
-
 
 ### UseMouse
 
@@ -151,14 +140,12 @@ Whenever to reduce mouse sensitivity when closer to center of axis.
 
 E.g. UseCenterReduction = 1
 
-
 ### AccelerationThrottle
 
 Whenever to add linear acceleration on throttle Vjoy Axis.
 0 for Disable, greater then 0 for Enable.
 
 E.g. AccelerationThrottle = 1.01
-
 
 ### AccelerationBreak
 
@@ -181,7 +168,6 @@ Greater then 1 to make center less sensitive while making ends more sensitive.
 Lesser then 1 to make center more sensitive while making ends less sensitive.
 
 E.g. CenterMultiplier = 1.01
-
 
 ## Built With
 
