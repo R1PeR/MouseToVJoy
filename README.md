@@ -13,7 +13,7 @@ https://sourceforge.net/projects/vjoystick/files/Beta%202.x/
 
 ## Configuration
 
-Program can be configured through config.txt file which have 21 different values that can be modified through any text editor.
+Program can be configured through config.txt file, which have 21 different values that can be modified through any text editor.
 
 ### Sensitivity
 
@@ -191,7 +191,7 @@ E.g. CenterMultiplier = 1.01
 
 ## Authors
 
-* **Sebastian Waluú** - *Initial work* - [PurpleBooth](https://github.com/R1per)
+* **Sebastian Walu≈ì** - *Initial work* - [PurpleBooth](https://github.com/R1per)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
