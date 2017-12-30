@@ -21,7 +21,7 @@ For easier tweaking use VjoyMonitor to visualize axis changes.
 The main sensitivity multiplier.
 Raw data from mouse is multiplied by this value and then added to Vjoy Axis. 
 
-E.g. Sensitivity = 1.0
+E.g. Sensitivity = 6.0
 
 ### AttackTimeThrottle
 
@@ -29,7 +29,7 @@ Throttle value when pressed.
 When throttle is pressed, every 2 ms value is added to Vjoy Axis. 
 The greater the steaper slope of attack.
 
-E.g. AttackTimeThrottle = 100
+E.g. AttackTimeThrottle = 200
 
 ### ReleaseTimeThrottle
 
@@ -45,7 +45,7 @@ Break value when pressed.
 When break is pressed, every 2 ms value is added to Vjoy Axis. 
 The greater the steaper slope of attack.
 
-E.g. AttackTimeBreak = 100
+E.g. AttackTimeBreak = 200
 
 ### ReleaseTimeBreak
 
@@ -61,7 +61,7 @@ Clutch value when pressed.
 When clutch is pressed, every 2 ms value is added to Vjoy Axis. 
 The greater the steaper slope of attack.
 
-E.g. AttackTimeClutch = 100
+E.g. AttackTimeClutch = 200
 
 ### ReleaseTimeClutch
 
@@ -69,7 +69,7 @@ Clutch value when released.
 When clutch is released, every 2 ms value is subtracted from Vjoy Axis. 
 The greater the steaper slope of release.
 
-E.g. ReleaseTimeClutch = 100
+E.g. ReleaseTimeClutch = 200
 
 ### ThrottleKey
 
@@ -168,7 +168,7 @@ How much center reduction to use.
 Greater then 1 to make center less sensitive while making ends more sensitive.
 Lesser then 1 to make center more sensitive while making ends less sensitive.
 
-E.g. CenterMultiplier = 1.01
+E.g. CenterMultiplier = 1.20  
 
 ## Built With
 
