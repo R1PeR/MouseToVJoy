@@ -19,6 +19,8 @@ Useful for racing games, created especially for Assetto Corsa to remove traction
 Some games I tested it with: Assetto Corsa, Live For Speed, Rfactor.
 
 ## Release History
+* 1.6
+    * ADD: `Force Feedback`
 * 1.5
     * ADD: 3 Configurable buttons.
 * 1.41
