@@ -15,6 +15,7 @@ MouseLockKey = 0
 MouseCenterKey = 0
 UseMouse = 1
 UseCenterReduction = 1
+UseForceFeedback = 1
 AccelerationThrottle = 1.01
 AccelerationBreak = 1.01
 AccelerationClutch = 1.01

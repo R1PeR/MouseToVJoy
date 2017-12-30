@@ -22,7 +22,7 @@ public:
 	//If UINT iInterface exist, enable FFB to device.
 	int enableFFB(UINT iInterface);
 	//When UINT iInterface is accuired, feeds vars X Y Z RX to Axises X Y Z RX.
-	void feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3, INT *FFBSIZE);
+	void feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3, INT *FFBSIZE, DOUBLE UseForceFeedback);
 
 private:
 	//Gets status from vjoy device using vjoyinterface.dll.
