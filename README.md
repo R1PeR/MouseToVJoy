@@ -3,7 +3,7 @@
 
 Simple application that converts mouse/keyboard input to vjoy output, created using vjoyinferace and winapi32.
 
-![](header.png)
+![](header.PNG)
 
 ## Installation
 
