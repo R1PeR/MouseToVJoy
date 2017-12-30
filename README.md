@@ -1,10 +1,39 @@
 # MouseToVJoy
+> Application that converts mouse/keyboard input to vjoy output.
 
-Application that converts mouse/keyboard input to vjoy output.
+Simple application that converts mouse/keyboard input to vjoy output, created using vjoyinferace and winapi32.
 
-## Getting Started
+![](header.png)
 
-Simply launch application, it will automaticly start feeding data to Vjoy device if exist.
+## Installation
+
+Windows:
+
+Open MouseToVJoy.exe
+Enjoy.
+
+## Usage example
+
+Useful for racing games, created especially for Assetto Corsa to remove traction control that was build into gamee.
+Some games I tested it with: Assetto Corsa, Live For Speed, Rfactor.
+
+## Release History
+* 1.5
+    * ADD: 3 Configurable buttons.
+* 1.41
+    * FIX: `Sensitivity Center Reduction` not working. 
+* 1.4
+    * ADD: `Sensitivity Center Reduction`.
+* 1.3
+    * ADD:  `Center Mouse Steering Axis`.
+* 1.21
+    * FIX: Typo in Breaking logic.
+* 1.2
+    * ADD: Acceleration options.
+* 1.1
+    * ADD: Configurable buttons.
+* 1.0
+    * First working release.
 
 ### Prerequisites
 
@@ -170,17 +199,25 @@ Lesser then 1 to make center more sensitive while making ends less sensitive.
 
 E.g. CenterMultiplier = 1.20  
 
+## Meta
+
+Sebastian Waluś – sebastian.walus@op.pl
+
+[https://github.com/R1per/github-link](https://github.com/R1per/)
+
+## Contributing
+
+1. Fork it (<https://github.com/yourname/yourproject/fork>)
+2. Create your feature branch (`git checkout -b feature/fooBar`)
+3. Commit your changes (`git commit -am 'Add some fooBar'`)
+4. Push to the branch (`git push origin feature/fooBar`)
+5. Create a new Pull Request
+
+
 ## Built With
 
 * [Vjoy](http://vjoystick.sourceforge.net/site/) - Virtual Joystick
 * [VjoyInterface](http://vjoystick.sourceforge.net/site/) - Virtual Joystick Comminucation Library
-
-
-## Authors
-
-* **Sebastian Waluś** - *Initial work* - [R1per](https://github.com/R1per)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## Acknowledgments
 
