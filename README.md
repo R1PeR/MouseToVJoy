@@ -178,7 +178,7 @@ E.g. CenterMultiplier = 1.01
 
 ## Authors
 
-* **Sebastian Waluœ** - *Initial work* - [PurpleBooth](https://github.com/R1per)
+* **Sebastian Waluœ** - *Initial work* - [R1per](https://github.com/R1per)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
