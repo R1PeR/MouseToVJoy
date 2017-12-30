@@ -1,12 +1,12 @@
-
 #include "vjoy.h"
 
-int vJoy::testDriver() {
 
+
+int vJoy::testDriver() {
 	printf("Mouse to vJoy Feeder\n");
 	printf("==================================\n");
 	printf("Author: R1per\n");
-	printf("Version: 1.5\n");
+	printf("Version: 1.6\n");
 	// Get the driver attributes (Vendor ID, Product ID, Version Number)
 	if (!vJoyEnabled())
 	{
@@ -25,8 +25,7 @@ int vJoy::testDriver() {
  vJoyInterface DLL (version %04x)\n", VerDrv, VerDll);
 	else
 		printf("vJoyInterface DLL Version: %04x\n", VerDrv);
-	printf("OK - Driver and DLL match\n", VerDrv);
-
+	printf("OK - Driver and DLL match\n");
 
 }
 
@@ -58,16 +57,30 @@ Cannot continue\n", iInterface);
 int vJoy::accuireDevice(UINT iInterface) {
 	// Acquire the target if not already owned
 	if ((status == VJD_STAT_OWN) || \
-		((status == VJD_STAT_FREE) && (!AcquireVJD(iInterface))))
+((status == VJD_STAT_FREE) && (!AcquireVJD(iInterface))))
 	{
 		printf("Failed to acquire vJoy device number %d.\n", iInterface);
 		return -1;
 	}
 	else
+	{
 		printf("Acquired: vJoy device number %d.\n", iInterface);
+	}
 }
 
-void vJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3) {
+int vJoy::enableFFB(UINT iInterface) {
+	// Acquire the target if not already owned
+	BOOL Ffbstarted = FfbStart(iInterface);
+	if (!Ffbstarted)
+	{
+		printf("Failed to start FFB on vJoy device number %d.\n", iInterface);
+	}
+	else
+		printf("Started FFB on vJoy device number %d - OK\n", iInterface);
+	return 0;
+}
+
+void vJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3, INT *FFBSIZE, DOUBLE UseForceFeedback) {
 	iReport.bDevice = iInterface;
 	iReport.wAxisX = X;
 	iReport.wAxisY = Y;
@@ -83,3 +96,5 @@ void vJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1
 		AcquireVJD(iInterface);
 	}
 }
+
+

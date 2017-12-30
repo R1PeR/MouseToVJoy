@@ -93,8 +93,8 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>C:\Users\Lenovo\Documents\GitHub\mousetovjoy\lib;C:\Users\Theone\Documents\Visual Studio 2017\Projects\MouseToVJoy\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vJoyInterface.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Lenovo\Documents\GitHub\mousetovjoy\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vjoyinterface.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -148,7 +148,9 @@
   <ItemGroup>
     <ClCompile Include="cInputDevices.cpp" />
     <ClCompile Include="fileRead.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="mouseToVjoy.cpp" />
     <ClCompile Include="vJoy.cpp" />
   </ItemGroup>
