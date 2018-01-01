@@ -20,7 +20,7 @@ Some games I tested it with: Assetto Corsa, Live For Speed, Rfactor.
 
 ## Release History
 * 1.6
-    * ADD: `Force Feedback`
+    * ADD: `Force Feedback` Working only for Constant Force
 * 1.5
     * ADD: 3 Configurable buttons.
 * 1.41
@@ -172,6 +172,14 @@ Whenever to reduce mouse sensitivity when closer to center of axis.
 0 for Disable, 1 for Enable.
 
 E.g. UseCenterReduction = 1
+
+### UseForceFeedback
+
+Whenever to use forcefeedback.
+0 for Disable, 1 for Enable.
+
+E.g. UseForceFeedback = 1
+
 
 ### AccelerationThrottle
 
