@@ -19,6 +19,8 @@ Useful for racing games, created especially for Assetto Corsa to remove traction
 Some games I tested it with: Assetto Corsa, Live For Speed, Rfactor.
 
 ## Release History
+* 1.6
+    * ADD: `Force Feedback` Working only for Constant Force
 * 1.5
     * ADD: 3 Configurable buttons.
 * 1.41
@@ -171,6 +173,14 @@ Whenever to reduce mouse sensitivity when closer to center of axis.
 
 E.g. UseCenterReduction = 1
 
+### UseForceFeedback
+
+Whenever to use forcefeedback.
+0 for Disable, 1 for Enable.
+
+E.g. UseForceFeedback = 1
+
+
 ### AccelerationThrottle
 
 Whenever to add linear acceleration on throttle Vjoy Axis.
@@ -208,7 +218,7 @@ Sebastian Waluś – sebastian.walus@op.pl
 
 ## Contributing
 
-1. Fork it (<https://github.com/yourname/yourproject/fork>)
+1. Fork it (<https://github.com/R1PeR/MouseToVJoy/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
