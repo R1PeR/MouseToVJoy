@@ -20,6 +20,8 @@ Some games I tested it with: Assetto Corsa, Live For Speed, Rfactor.
 
 ## Release History
 * 1.6
+    * FIX: `UseMouse` Not Working (Thanks nonical)
+* 1.6
     * ADD: `Force Feedback` Working only for Constant Force
 * 1.5
     * ADD: 3 Configurable buttons.
