@@ -72,7 +72,7 @@ void UpdateCode() {
 	if (fR.result(21) == 1) {
 		X = X + ffbSize;
 	}
-	mTV.inputLogic(rInput, X, Y, Z, RX, BUTTON1, BUTTON2, BUTTON3, fR.result(1), fR.result(2), fR.result(3), fR.result(4), fR.result(5), fR.result(6), fR.result(7), fR.result(8), fR.result(9), fR.result(10), fR.result(11), fR.result(12), fR.result(13), fR.result(14), fR.result(16), fR.result(17), fR.result(18), fR.result(19));
+	mTV.inputLogic(rInput, X, Y, Z, RX, BUTTON1, BUTTON2, BUTTON3, fR.result(1), fR.result(2), fR.result(3), fR.result(4), fR.result(5), fR.result(6), fR.result(7), fR.result(8), fR.result(9), fR.result(10), fR.result(11), fR.result(12), fR.result(13), fR.result(14), fR.result(15), fR.result(17), fR.result(18), fR.result(19));
 	vJ.feedDevice(1, X, Y, Z, RX, BUTTON1, BUTTON2, BUTTON3, &ffbSize, fR.result(21));
 }
 
@@ -173,7 +173,7 @@ void CALLBACK FfbToVjoy(PVOID data, PVOID userdata) {
 		FFB_EFF_CONSTANT ConstantEffect;		
 		if (ERROR_SUCCESS == Ffb_h_Eff_Constant((FFB_DATA *)data, &ConstantEffect)) {
 			force = ConstantEffect.Magnitude/1000;
-			printf("Force to : %d\n", force);
+			//printf("Force to : %d\n", force);
 		}
 		if (ERROR_SUCCESS == Ffb_h_Eff_Report((FFB_DATA *)data, &Effect)) {
 			direction = Polar2Deg(Effect.Direction);
