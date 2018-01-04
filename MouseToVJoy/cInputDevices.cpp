@@ -30,11 +30,13 @@ void cInputDevices::GetData(LPARAM lParam)
 		if (bStateDown == true && bStateUp == false)
 		{
 			m_bLMB = true;
+			m_baKeyboard[0x01] = true;
 		}
 
 		if (bStateUp == true)
 		{
 			m_bLMB = false;
+			m_baKeyboard[0x01] = false;
 		}
 
 
@@ -44,11 +46,14 @@ void cInputDevices::GetData(LPARAM lParam)
 		if (bStateDownTwo == true && bStateUpTwo == false)
 		{
 			m_bRMB = true;
+			m_baKeyboard[0x02] = true;
+			
 		}
 
 		if (bStateUpTwo == true)
 		{
 			m_bRMB = false;
+			m_baKeyboard[0x02] = false;
 		}
 
 
