@@ -19,6 +19,8 @@ Useful for racing games, created especially for Assetto Corsa to remove traction
 Some games I tested it with: Assetto Corsa, Live For Speed, Rfactor.
 
 ## Release History
+* 1.63
+   * ADD: Support for Periodic Force Feedback
 * 1.62
     * ADD: Ability to use mouse buttons on other functions than breake and throttle.
 * 1.61
