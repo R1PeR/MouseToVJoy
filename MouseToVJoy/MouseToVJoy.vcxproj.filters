@@ -19,6 +19,9 @@
     <ClInclude Include="mousetovjoy.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Stopwatch.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">

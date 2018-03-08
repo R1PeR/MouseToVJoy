@@ -6,7 +6,7 @@ int vJoy::testDriver() {
 	printf("Mouse to vJoy Feeder\n");
 	printf("==================================\n");
 	printf("Author: R1per\n");
-	printf("Version: 1.62\n");
+	printf("Version: 1.63\n");
 	// Get the driver attributes (Vendor ID, Product ID, Version Number)
 	if (!vJoyEnabled())
 	{
@@ -80,7 +80,7 @@ int vJoy::enableFFB(UINT iInterface) {
 	return 0;
 }
 
-void vJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3, INT *FFBSIZE, DOUBLE UseForceFeedback) {
+void vJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3) {
 	iReport.bDevice = iInterface;
 	iReport.wAxisX = X;
 	iReport.wAxisY = Y;

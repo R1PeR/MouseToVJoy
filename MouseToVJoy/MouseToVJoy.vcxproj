@@ -161,6 +161,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="mousetovjoy.h" />
     <ClInclude Include="public.h" />
+    <ClInclude Include="Stopwatch.h" />
     <ClInclude Include="vjoy.h" />
     <ClInclude Include="vjoyinterface.h" />
   </ItemGroup>
