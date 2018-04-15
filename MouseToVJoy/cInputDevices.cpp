@@ -1,6 +1,6 @@
 #include "input.h"
 
-void cInputDevices::GetData(LPARAM lParam)
+void CInputDevices::getData(LPARAM lParam)
 {
 	// Determine how big the buffer should be
 	UINT bufferSize;
@@ -10,17 +10,17 @@ void cInputDevices::GetData(LPARAM lParam)
 
 	// Call the function again, this time with the buffer to get the data
 	if (bufferSize <= 40)
-		GetRawInputData((HRAWINPUT)lParam, RID_INPUT, (LPVOID)m_buffer, &bufferSize, sizeof(RAWINPUTHEADER));
+		GetRawInputData((HRAWINPUT)lParam, RID_INPUT, (LPVOID)_buffer, &bufferSize, sizeof(RAWINPUTHEADER));
 
-	RAWINPUT *raw = (RAWINPUT*)m_buffer;
+	RAWINPUT *raw = (RAWINPUT*)_buffer;
 
 	// The mouse has not been tested extensively,
 	// but I believe it works.
 	if (raw->header.dwType == RIM_TYPEMOUSE)
 	{
 		// Get values from the mouse member (of type RAWMOUSE)
-		m_nMouseXChange = raw->data.mouse.lLastX;
-		m_nMouseYChange = raw->data.mouse.lLastY;
+		_mouseXChange = raw->data.mouse.lLastX;
+		_mouseYChange = raw->data.mouse.lLastY;
 
 
 
@@ -29,14 +29,14 @@ void cInputDevices::GetData(LPARAM lParam)
 
 		if (bStateDown == true && bStateUp == false)
 		{
-			m_bLMB = true;
-			m_baKeyboard[0x01] = true;
+			_isLeftMouseButtonPressed = true;
+			_isKeyboardButtonPressed[0x01] = true;
 		}
 
 		if (bStateUp == true)
 		{
-			m_bLMB = false;
-			m_baKeyboard[0x01] = false;
+			_isLeftMouseButtonPressed = false;
+			_isKeyboardButtonPressed[0x01] = false;
 		}
 
 
@@ -45,15 +45,15 @@ void cInputDevices::GetData(LPARAM lParam)
 
 		if (bStateDownTwo == true && bStateUpTwo == false)
 		{
-			m_bRMB = true;
-			m_baKeyboard[0x02] = true;
+			_isRightMouseButtonPressed = true;
+			_isKeyboardButtonPressed[0x02] = true;
 			
 		}
 
 		if (bStateUpTwo == true)
 		{
-			m_bRMB = false;
-			m_baKeyboard[0x02] = false;
+			_isRightMouseButtonPressed = false;
+			_isKeyboardButtonPressed[0x02] = false;
 		}
 
 
@@ -88,7 +88,7 @@ void cInputDevices::GetData(LPARAM lParam)
 				// However our alphabet or array of booleans that
 				// represent it, begins at 0 and is only 25 in length.
 				// So i itself is the appropritate index.
-				pbToKey = &m_baKeyboard[i+0x01];
+				pbToKey = &_isKeyboardButtonPressed[i+0x01];
 
 				// At this point we have assigned our boolean pointer variable
 				// a new address which is whatever index i would be accessing.
@@ -101,7 +101,7 @@ void cInputDevices::GetData(LPARAM lParam)
 		if (pbToKey != NULL)
 		{
 
-			*pbToKey = CheckKeyPress(*pbToKey, keyUp);
+			*pbToKey = checkKeyPress(*pbToKey, keyUp);
 
 			// Be sure to return ASAP!
 			return;
@@ -115,14 +115,14 @@ void cInputDevices::GetData(LPARAM lParam)
 
 }
 
-bool cInputDevices::CheckKeyPress(bool bLastKeyState, bool bThisKeyState)
+bool CInputDevices::checkKeyPress(bool isLastKeyState, bool isThisKeyState)
 {
 	// The following may be overkill, but just know the value returned
 	// is based upon the current state of the boolean in question, and the
 	// new state we have processed.
-	if (bThisKeyState == false)
+	if (isThisKeyState == false)
 	{
-		if (bLastKeyState == true)
+		if (isLastKeyState == true)
 		{
 			return true;
 		}
@@ -131,9 +131,9 @@ bool cInputDevices::CheckKeyPress(bool bLastKeyState, bool bThisKeyState)
 			return true;
 		}
 	}
-	else if (bThisKeyState == true)
+	else if (isThisKeyState == true)
 	{
-		if (bLastKeyState == false)
+		if (isLastKeyState == false)
 		{
 			return false;
 		}

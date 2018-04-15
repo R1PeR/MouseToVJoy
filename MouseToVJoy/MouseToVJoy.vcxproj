@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="cInputDevices.cpp" />
     <ClCompile Include="fileRead.cpp" />
+    <ClCompile Include="forceFeedBack.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -157,11 +158,13 @@
     <ClCompile Include="vJoy.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="fileRead.h" />
+    <ClInclude Include="ffbsize.h" />
+    <ClInclude Include="fileread.h" />
+    <ClInclude Include="forcefeedback.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="mousetovjoy.h" />
     <ClInclude Include="public.h" />
-    <ClInclude Include="Stopwatch.h" />
+    <ClInclude Include="stopwatch.h" />
     <ClInclude Include="vjoy.h" />
     <ClInclude Include="vjoyinterface.h" />
   </ItemGroup>

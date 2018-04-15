@@ -1,91 +1,89 @@
 #include "mousetovjoy.h"
 #include <iostream>
 #include <math.h>
-#define SteeringMax 16384
-#define SteeringMin -16384
-//define center multiplier to be able to modify it during function.
-DOUBLE CenterMultiplier;
+#define STEERING_MIN 16384
+#define STEERING_MAX -16384
 
-void mouseToVjoy::inputLogic(cInputDevices Input, INT &X, INT &Y, INT &Z, INT &RX, BOOL &BUTTON1, BOOL &BUTTON2, BOOL &BUTTON3, DOUBLE AttackTimeThrottle, DOUBLE ReleaseTimeThrottle, DOUBLE AttackTimeBreak, DOUBLE ReleaseTimeBreak, DOUBLE AttackTimeClutch, DOUBLE ReleaseTimeClutch, INT ThrottleKey, INT BreakKey, INT ClutchKey, INT GearShiftUpKey, INT GearShiftDownKey, INT HandBrakeKey, INT MouseLockKey, INT MouseCenterKey, INT UseMouse, DOUBLE AccelerationThrottle, DOUBLE AccelerationBreak, DOUBLE AccelerationClutch) {
-	if (UseMouse == 1) {
-		if (Input.IsLeftMouseButtonDown() && Y < 32767) {
-			Y = (Y + AttackTimeThrottle ) * AccelerationThrottle;
+void MouseToVjoy::inputLogic(CInputDevices input, INT &axisX, INT &axisY, INT &axisZ, INT &axisRX, BOOL &isButton1Clicked, BOOL &isButton2Clicked, BOOL &isButton3Clicked, DOUBLE attackTimeThrottle, DOUBLE releaseTimeThrottle, DOUBLE attackTimeBreak, DOUBLE releaseTimeBreak, DOUBLE attackTimeClutch, DOUBLE releaseTimeClutch, INT throttleKey, INT breakKey, INT clutchKey, INT gearShiftUpKey, INT gearShiftDownKey, INT handBrakeKey, INT mouseLockKey, INT mouseCenterKey, INT useMouse, DOUBLE accelerationThrottle, DOUBLE accelerationBreak, DOUBLE accelerationClutch) {
+	if (useMouse == 1) {
+		if (input.isLeftMouseButtonDown() && axisY < 32767) {
+			axisY = (axisY + attackTimeThrottle ) * accelerationThrottle;
 		}
-		if (!Input.IsLeftMouseButtonDown() && Y > 1) {
-			Y = (Y - ReleaseTimeThrottle) / AccelerationThrottle;;
+		if (!input.isLeftMouseButtonDown() && axisY > 1) {
+			axisY = (axisY - releaseTimeThrottle) / accelerationThrottle;;
 		}
-		if (Input.IsRightMouseButtonDown() && Z < 32767) {
-			Z = (Z + AttackTimeBreak) * AccelerationBreak;
+		if (input.isRightMouseButtonDown() && axisZ < 32767) {
+			axisZ = (axisZ + attackTimeBreak) * accelerationBreak;
 		}
-		if (!Input.IsRightMouseButtonDown() && Z > 1) {
-			Z = (Z - ReleaseTimeBreak) / AccelerationBreak;
+		if (!input.isRightMouseButtonDown() && axisZ > 1) {
+			axisZ = (axisZ - releaseTimeBreak) / accelerationBreak;
 		}
 	}
 	else {
-		if (Input.IsAlphabeticKeyDown(ThrottleKey) && Y < 32767) {
-			Y = (Y + AttackTimeThrottle) * AccelerationThrottle;
+		if (input.isAlphabeticKeyDown(throttleKey) && axisY < 32767) {
+			axisY = (axisY + attackTimeThrottle) * accelerationThrottle;
 		}
-		if (!Input.IsAlphabeticKeyDown(ThrottleKey) && Y > 1) {
-			Y = (Y - AttackTimeThrottle) / AccelerationThrottle;
+		if (!input.isAlphabeticKeyDown(throttleKey) && axisY > 1) {
+			axisY = (axisY - attackTimeThrottle) / accelerationThrottle;
 		}
-		if (Input.IsAlphabeticKeyDown(BreakKey) && Z < 32767) {
-			Z = (Z + AttackTimeThrottle) * AccelerationBreak;
+		if (input.isAlphabeticKeyDown(breakKey) && axisZ < 32767) {
+			axisZ = (axisZ + attackTimeThrottle) * accelerationBreak;
 		}
-		if (!Input.IsAlphabeticKeyDown(BreakKey) && Z > 1) {
-			Z = (Z - AttackTimeThrottle) / AccelerationBreak;
+		if (!input.isAlphabeticKeyDown(breakKey) && axisZ > 1) {
+			axisZ = (axisZ - attackTimeThrottle) / accelerationBreak;
 		}
 	}
-	if (Input.IsAlphabeticKeyDown(ClutchKey) && RX < 32767) {
-		RX = (RX + AttackTimeClutch) * AccelerationClutch;
+	if (input.isAlphabeticKeyDown(clutchKey) && axisRX < 32767) {
+		axisRX = (axisRX + attackTimeClutch) * accelerationClutch;
 	}
-	if (!Input.IsAlphabeticKeyDown(ClutchKey) && RX > 1) {
-		RX = (RX - ReleaseTimeClutch) / AccelerationClutch;
+	if (!input.isAlphabeticKeyDown(clutchKey) && axisRX > 1) {
+		axisRX = (axisRX - releaseTimeClutch) / accelerationClutch;
 	}
-	if (Input.IsAlphabeticKeyDown(MouseLockKey)) {
-		SleepEx(250, !(Input.IsAlphabeticKeyDown(MouseLockKey)));
-		if (CursorLocked == false) {
-			CursorLocked = true;
+	if (input.isAlphabeticKeyDown(mouseLockKey)) {
+		SleepEx(250, !(input.isAlphabeticKeyDown(mouseLockKey)));
+		if (_isCursorLocked == false) {
+			_isCursorLocked = true;
 		}
 		else {
-			CursorLocked = false;
+			_isCursorLocked = false;
 		}
 	}
-	if (Input.IsAlphabeticKeyDown(MouseCenterKey)) {
-		SleepEx(250, !(Input.IsAlphabeticKeyDown(MouseCenterKey)));
-		X = (32766 / 2);
+	if (input.isAlphabeticKeyDown(mouseCenterKey)) {
+		SleepEx(250, !(input.isAlphabeticKeyDown(mouseCenterKey)));
+		axisX = (32766 / 2);
 	}
-	if (Input.IsAlphabeticKeyDown(GearShiftUpKey)) {
-		BUTTON1 = true;
+	if (input.isAlphabeticKeyDown(gearShiftUpKey)) {
+		isButton1Clicked = true;
 	}
-	else BUTTON1 = false;
-	if (Input.IsAlphabeticKeyDown(GearShiftDownKey)) {
-		BUTTON2 = true;
+	else isButton1Clicked = false;
+	if (input.isAlphabeticKeyDown(gearShiftDownKey)) {
+		isButton2Clicked = true;
 	}
-	else BUTTON2 = false;
-	if (Input.IsAlphabeticKeyDown(HandBrakeKey)){
-		BUTTON3 = true;
+	else isButton2Clicked = false;
+	if (input.isAlphabeticKeyDown(handBrakeKey)){
+		isButton3Clicked = true;
 	}
-	else BUTTON3 = false;
-	if (CursorLocked == true) {
+	else isButton3Clicked = false;
+	if (_isCursorLocked == true) {
 		SetCursorPos(0, 0);
 	}
 
 }
 
-void mouseToVjoy::mouseLogic(cInputDevices Input, INT &X, DOUBLE Sensitivity, DOUBLE SensitivityCenterReduction, INT UseCenterReduction){
+void MouseToVjoy::mouseLogic(CInputDevices input, INT &X, DOUBLE sensitivity, DOUBLE sensitivityCenterReduction, INT useCenterReduction){
 	//vjoy max value is 0-32767 to make it easier to scale linear reduction/acceleration I subtract half of it so 16384 to make it -16384 to 16384.
 	X = X - 16384;
 	if (X > 0) {
-		CenterMultiplier = pow(SensitivityCenterReduction, (1 - (X / SteeringMax)));
+		_centerMultiplier = pow(sensitivityCenterReduction, (1 - (X / STEERING_MIN)));
 	}
 	else if(X < 0){
-		CenterMultiplier = pow(SensitivityCenterReduction, (1 - (X / SteeringMin)));
+		_centerMultiplier = pow(sensitivityCenterReduction, (1 - (X / STEERING_MAX)));
 	}
-	if (UseCenterReduction == 1) {
-		X = X + ((Input.GetMouseChangeX() * Sensitivity) / CenterMultiplier);
+	if (useCenterReduction == 1) {
+		X = X + ((input.getMouseChangeX() * sensitivity) / _centerMultiplier);
 	}
 	else {
-		X = X + (Input.GetMouseChangeX() * Sensitivity);
+		X = X + (input.getMouseChangeX() * sensitivity);
 	}
 
 	if (X > 16384) {

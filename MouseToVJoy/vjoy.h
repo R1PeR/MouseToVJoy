@@ -11,7 +11,7 @@
 /* Class that does everything with the vjoy, testing, accuiring, feeding.*/
 
 
-class vJoy {
+class VJoy {
 public:
 	//Tests if the driver version is equal to dll version.
 	int testDriver();
@@ -26,8 +26,8 @@ public:
 
 private:
 	//Gets status from vjoy device using vjoyinterface.dll.
-	VjdStat status;
+	VjdStat _status;
 	//Creates new joystick position array named iReport, used to feed all the data at the same time.
-	JOYSTICK_POSITION_V2 iReport;
+	JOYSTICK_POSITION_V2 _iReport;
 };
 #endif

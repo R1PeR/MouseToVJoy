@@ -17,16 +17,16 @@ using namespace std;
   then it checks if /string name/ is equal to any string from checkArray, then parses it into resultArray.
   Result order is the same as checkArray order.
   Eg. checkArray = "Sensitivity, Multiplier, Divider" then no matter the order in file,
-  output will be restultArray[Sensitivity, Multiplier, Divider etc.].
-  To acces result just use funtion result[number] eg. result[0] for Sensitivity.
+  output will be restultArray[sensitivity, multiplier, divider etc.].
+  To access result just use funtion result[number] eg. result[0] for sensitivity.
 */
-class fileRead{
+class FileRead{
 public:
 	void newFile(string fileName, string checkArray[]);
 
-	double result(int number) { return resultArray[number]; };
+	double result(int number) { return _resultArray[number]; };
 
 private:
-	double resultArray[32];
+	double _resultArray[32];
 };
 #endif

@@ -2,11 +2,11 @@
 
 
 
-int vJoy::testDriver() {
+int VJoy::testDriver() {
 	printf("Mouse to vJoy Feeder\n");
 	printf("==================================\n");
 	printf("Author: R1per\n");
-	printf("Version: 1.63\n");
+	printf("Version: 1.64\n");
 	// Get the driver attributes (Vendor ID, Product ID, Version Number)
 	if (!vJoyEnabled())
 	{
@@ -29,10 +29,10 @@ int vJoy::testDriver() {
 
 }
 
-int vJoy::testVirtualDevices(UINT iInterface) {
+int VJoy::testVirtualDevices(UINT iInterface) {
 	// Get the state of the requested device (iInterface)
-	status = GetVJDStatus(iInterface);
-	switch (status)
+	_status = GetVJDStatus(iInterface);
+	switch (_status)
 	{
 	case VJD_STAT_OWN:
 		printf("vJoy Device %d is already owned by this feeder\n", iInterface);
@@ -54,10 +54,10 @@ Cannot continue\n", iInterface);
 	};
 }
 
-int vJoy::accuireDevice(UINT iInterface) {
+int VJoy::accuireDevice(UINT iInterface) {
 	// Acquire the target if not already owned
-	if ((status == VJD_STAT_OWN) || \
-((status == VJD_STAT_FREE) && (!AcquireVJD(iInterface))))
+	if ((_status == VJD_STAT_OWN) || \
+((_status == VJD_STAT_FREE) && (!AcquireVJD(iInterface))))
 	{
 		printf("Failed to acquire vJoy device number %d.\n", iInterface);
 		return -1;
@@ -68,7 +68,7 @@ int vJoy::accuireDevice(UINT iInterface) {
 	}
 }
 
-int vJoy::enableFFB(UINT iInterface) {
+int VJoy::enableFFB(UINT iInterface) {
 	// Acquire the target if not already owned
 	BOOL Ffbstarted = FfbStart(iInterface);
 	if (!Ffbstarted)
@@ -80,16 +80,16 @@ int vJoy::enableFFB(UINT iInterface) {
 	return 0;
 }
 
-void vJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3) {
-	iReport.bDevice = iInterface;
-	iReport.wAxisX = X;
-	iReport.wAxisY = Y;
-	iReport.wAxisZ = Z;
-	iReport.wAxisXRot = RX;
-	if (BUTTON1) iReport.lButtons |= 0x1; else iReport.lButtons &= 0xFE;
-	if (BUTTON2) iReport.lButtons |= 0x2; else iReport.lButtons &= 0xFD;
-	if (BUTTON3) iReport.lButtons |= 0x4; else iReport.lButtons &= 0xFB;
-	if (!UpdateVJD(iInterface, (PVOID)&iReport))
+void VJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3) {
+	_iReport.bDevice = iInterface;
+	_iReport.wAxisX = X;
+	_iReport.wAxisY = Y;
+	_iReport.wAxisZ = Z;
+	_iReport.wAxisXRot = RX;
+	if (BUTTON1) _iReport.lButtons |= 0x1; else _iReport.lButtons &= 0xFE;
+	if (BUTTON2) _iReport.lButtons |= 0x2; else _iReport.lButtons &= 0xFD;
+	if (BUTTON3) _iReport.lButtons |= 0x4; else _iReport.lButtons &= 0xFB;
+	if (!UpdateVJD(iInterface, (PVOID)&_iReport))
 	{
 		printf("Feeding vJoy device number %d failed - try to enable device then press enter\n", iInterface);
 		getchar();

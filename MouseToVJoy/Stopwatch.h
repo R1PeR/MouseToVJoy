@@ -32,22 +32,22 @@ namespace win32
 		Stopwatch() noexcept;
 
 		// Clear the stopwatch state
-		void Reset() noexcept;
+		void reset() noexcept;
 
 		// Start measuring time.
 		// When finished, call Stop().
 		// Can call ElapsedTime() also before calling Stop(): in this case,
 		// the elapsed time is measured since the Start() call.
-		void Start() noexcept;
+		void start() noexcept;
 
 		// Stop measuring time.
 		// Call ElapsedMilliseconds() to get the elapsed time from the Start() call.
-		void Stop() noexcept;
+		void stop() noexcept;
 
 		// Return elapsed time interval duration, in milliseconds.
 		// Can be called both after Stop() and before it. 
 		// (Start() must have been called to initiate time interval measurements).
-		double ElapsedMilliseconds() const noexcept;
+		double elapsedMilliseconds() const noexcept;
 
 
 		//
@@ -62,10 +62,10 @@ namespace win32
 		// *** IMPLEMENTATION ***
 		//
 	private:
-		bool m_running;                 // is the timer running?
-		long long m_start;              // start tick count
-		long long m_finish;             // end tick count
-		const long long m_frequency;    // cached frequency value
+		bool _running;                 // is the timer running?
+		long long _start;              // start tick count
+		long long _finish;             // end tick count
+		const long long _frequency;    // cached frequency value
 
 										//
 										// According to MSDN documentation:
@@ -78,14 +78,14 @@ namespace win32
 										//
 
 										// Wrapper to Win32 API QueryPerformanceCounter()
-		static long long Counter() noexcept;
+		static long long counter() noexcept;
 
 		// Wrapper to Win32 API QueryPerformanceFrequency()
-		static long long Frequency() noexcept;
+		static long long frequency() noexcept;
 
 		// Calculate elapsed time in milliseconds,
 		// given a start tick and end tick counts.
-		double ElapsedMilliseconds(long long start, long long finish) const noexcept;
+		double elapsedMilliseconds(long long start, long long finish) const noexcept;
 	};
 
 
@@ -96,49 +96,49 @@ namespace win32
 
 
 	inline Stopwatch::Stopwatch() noexcept
-		: m_running{ false }
-		, m_start{ 0 }
-		, m_finish{ 0 }
-		, m_frequency{ Frequency() }
+		: _running{ false }
+		, _start{ 0 }
+		, _finish{ 0 }
+		, _frequency{ frequency() }
 	{}
 
 
-	inline void Stopwatch::Reset() noexcept
+	inline void Stopwatch::reset() noexcept
 	{
-		m_finish = m_start = 0;
-		m_running = false;
+		_finish = _start = 0;
+		_running = false;
 	}
 
 
-	inline void Stopwatch::Start() noexcept
+	inline void Stopwatch::start() noexcept
 	{
-		m_running = true;
-		m_finish = 0;
+		_running = true;
+		_finish = 0;
 
-		m_start = Counter();
+		_start = counter();
 	}
 
 
-	inline void Stopwatch::Stop() noexcept
+	inline void Stopwatch::stop() noexcept
 	{
-		m_finish = Counter();
-		m_running = false;
+		_finish = counter();
+		_running = false;
 	}
 
 
-	inline double Stopwatch::ElapsedMilliseconds() const noexcept
+	inline double Stopwatch::elapsedMilliseconds() const noexcept
 	{
-		if (m_running)
+		if (_running)
 		{
-			const long long current{ Counter() };
-			return ElapsedMilliseconds(m_start, current);
+			const long long current{ counter() };
+			return elapsedMilliseconds(_start, current);
 		}
 
-		return ElapsedMilliseconds(m_start, m_finish);
+		return elapsedMilliseconds(_start, _finish);
 	}
 
 
-	inline long long Stopwatch::Counter() noexcept
+	inline long long Stopwatch::counter() noexcept
 	{
 		LARGE_INTEGER li;
 		::QueryPerformanceCounter(&li);
@@ -146,7 +146,7 @@ namespace win32
 	}
 
 
-	inline long long Stopwatch::Frequency() noexcept
+	inline long long Stopwatch::frequency() noexcept
 	{
 		LARGE_INTEGER li;
 		::QueryPerformanceFrequency(&li);
@@ -154,13 +154,13 @@ namespace win32
 	}
 
 
-	inline double Stopwatch::ElapsedMilliseconds(long long start, long long finish) const noexcept
+	inline double Stopwatch::elapsedMilliseconds(long long start, long long finish) const noexcept
 	{
 		_ASSERTE(start >= 0);
 		_ASSERTE(finish >= 0);
 		_ASSERTE(start <= finish);
 
-		return ((finish - start) * 1000.0) / m_frequency;
+		return ((finish - start) * 1000.0) / _frequency;
 	}
 
 

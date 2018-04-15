@@ -10,16 +10,22 @@
     <ClInclude Include="vjoyinterface.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="fileRead.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="vjoy.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="mousetovjoy.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Stopwatch.h">
+    <ClInclude Include="stopwatch.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="fileread.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="forcefeedback.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ffbsize.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -45,6 +51,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="cInputDevices.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="forceFeedBack.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
