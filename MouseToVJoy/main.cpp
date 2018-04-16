@@ -23,10 +23,13 @@ ForceFeedBack fFB;
 INT axisX, axisY, axisZ, axisRX, ffbStrength;
 BOOL isButton1Clicked, isButton2Clicked, isButton3Clicked;
 string keyCodeName;
-
+void CALLBACK FFBCALLBACK(PVOID data, PVOID userData) {
+	fFB.ffbToVJoy(data, userData);
+}
 using namespace std;
 using win32::Stopwatch;
 Stopwatch sw;
+
 void initializationCode() {
 	//Code that is run only once, tests vjoy device, reads config file and prints basic out accuired vars.
 	UINT DEV_ID = 1;
@@ -34,7 +37,7 @@ void initializationCode() {
 	vJ.testVirtualDevices(DEV_ID);
 	vJ.accuireDevice(DEV_ID);
 	vJ.enableFFB(DEV_ID);
-	//FfbRegisterGenCB(fFB.ffbToVJoy, &DEV_ID);
+	FfbRegisterGenCB(FFBCALLBACK, &DEV_ID);
 	string fileName = "config.txt";
 	string checkArray[22] = { "Sensitivity", "AttackTimeThrottle", "ReleaseTimeThrottle", "AttackTimeBreak", "ReleaseTimeBreak", "AttackTimeClutch", "ReleaseTimeClutch", "ThrottleKey", "BreakKey", "ClutchKey", "GearShiftUpKey", "GearShiftDownKey", "HandBrakeKey", "MouseLockKey", "MouseCenterKey", "UseMouse","UseCenterReduction" , "AccelerationThrottle", "AccelerationBreak", "AccelerationClutch", "CenterMultiplier", "UseForceFeedback" };
 	fR.newFile(fileName, checkArray);

@@ -6,7 +6,7 @@ int VJoy::testDriver() {
 	printf("Mouse to vJoy Feeder\n");
 	printf("==================================\n");
 	printf("Author: R1per\n");
-	printf("Version: 1.64\n");
+	printf("Version: 1.65\n");
 	// Get the driver attributes (Vendor ID, Product ID, Version Number)
 	if (!vJoyEnabled())
 	{
