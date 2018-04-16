@@ -1,4 +1,5 @@
 # MouseToVJoy
+#FFB IS BROKEN AS FOR 1.64 VERSION SORRY
 > Application that converts mouse/keyboard input to vjoy output.
 
 Simple application that converts mouse/keyboard input to vjoy output, created using vjoyinferace and winapi32.
