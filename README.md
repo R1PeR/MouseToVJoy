@@ -1,5 +1,4 @@
 # MouseToVJoy
-#FFB IS BROKEN AS FOR 1.64 VERSION SORRY
 > Application that converts mouse/keyboard input to vjoy output.
 
 Simple application that converts mouse/keyboard input to vjoy output, created using vjoyinferace and winapi32.
@@ -20,6 +19,8 @@ Useful for racing games, created especially for Assetto Corsa to remove traction
 Some games I tested it with: Assetto Corsa, Live For Speed, Rfactor.
 
 ## Release History
+* 1.65
+    * FIX: 'ForceFeedback' not working.
 * 1.64
     * ADD: Command line support, '-noconsole' to launch without console.
     * FIX: Code structure, made it more pleasant to read.
