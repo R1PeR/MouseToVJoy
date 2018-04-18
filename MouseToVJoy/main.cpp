@@ -11,36 +11,38 @@
 #include "stopwatch.h"
 #include "forcefeedback.h"
 
+using namespace std;
+using win32::Stopwatch;
+//Instantiate classes
 const char g_szClassName[] = "myWindowClass";
 HWND hwnd;
 WNDCLASSEX wc;
-MSG msgWindow;
+MSG msgWindow; //Intantiating a MSG class, which recives messages from "dummy" window 
 VJoy vJ;
-MouseToVjoy mTV;
-CInputDevices rInput;
-FileRead fR;
-ForceFeedBack fFB;
-INT axisX, axisY, axisZ, axisRX, ffbStrength;
-BOOL isButton1Clicked, isButton2Clicked, isButton3Clicked;
-string keyCodeName;
-void CALLBACK FFBCALLBACK(PVOID data, PVOID userData) {
+MouseToVjoy mTV;//Class that gets data, then processes it and modifies axises.
+CInputDevices rInput;//Class that helps with determining what key was pressed.
+FileRead fR;//Class used for reading and writing to config.txt file.
+ForceFeedBack fFB;//Used to recive and interpret ForceFeedback calls from game window.
+Stopwatch sw;//Measuring time in nanoseconds
+INT axisX, axisY, axisZ, axisRX, ffbStrength; //Local variables that stores all axis values and forcefeedback strength we need.
+BOOL isButton1Clicked, isButton2Clicked, isButton3Clicked; //Bools that stores information if button was pressed.
+void CALLBACK FFBCALLBACK(PVOID data, PVOID userData) {//Creating local callback which just executes callback from ForceFeedBack class.
 	fFB.ffbToVJoy(data, userData);
 }
-using namespace std;
-using win32::Stopwatch;
-Stopwatch sw;
-
+//Code that is run once application is initialized, test virtual joystick and accuires it, also it reads config.txt file and prints out menu and variables.
 void initializationCode() {
 	//Code that is run only once, tests vjoy device, reads config file and prints basic out accuired vars.
 	UINT DEV_ID = 1;
-	vJ.testDriver();
-	vJ.testVirtualDevices(DEV_ID);
-	vJ.accuireDevice(DEV_ID);
-	vJ.enableFFB(DEV_ID);
-	FfbRegisterGenCB(FFBCALLBACK, &DEV_ID);
-	string fileName = "config.txt";
+	vJ.testDriver();//Test if driver is installed and compatible.
+	vJ.testVirtualDevices(DEV_ID);//Test if virtually created joystick is up and running.
+	vJ.accuireDevice(DEV_ID);//Accuire virtual joystick of index number DEV_ID
+	vJ.enableFFB(DEV_ID);//Enable virtual joystick of index number DEV_ID to accept forcefeedback calls
+	FfbRegisterGenCB(FFBCALLBACK, &DEV_ID);//Registed what function to run on forcefeedback call.
+	string configFileName = "config.txt";
+	//what strings to look for in config file.
 	string checkArray[22] = { "Sensitivity", "AttackTimeThrottle", "ReleaseTimeThrottle", "AttackTimeBreak", "ReleaseTimeBreak", "AttackTimeClutch", "ReleaseTimeClutch", "ThrottleKey", "BreakKey", "ClutchKey", "GearShiftUpKey", "GearShiftDownKey", "HandBrakeKey", "MouseLockKey", "MouseCenterKey", "UseMouse","UseCenterReduction" , "AccelerationThrottle", "AccelerationBreak", "AccelerationClutch", "CenterMultiplier", "UseForceFeedback" };
-	fR.newFile(fileName, checkArray);
+	fR.newFile(configFileName, checkArray);//read configFileName and look for checkArray
+	//Printing basic menu with assigned values
 	printf("==================================\n");
 	printf("Sensitivity = %.2f \n", fR.result(0));
 	printf("Throttle Attack Time = %.0f \n", fR.result(1));
@@ -66,9 +68,9 @@ void initializationCode() {
 	printf("Center Multiplier = %.2f \n", fR.result(20));
 	printf("==================================\n");
 }
-
+//Code that is run every time program gets an message from enviroment(mouse movement, mouse click etc.), manages input logic and feeding device.
+//Update code is sleeping for 2 miliseconds to make is less cpu demanding
 void updateCode() {
-	//Code that is run every time program gets an message from enviroment(mouse movement, mouse click etc.), manages input logic and feeding device.
 	Sleep(2);
 	if (fFB.getFfbSize().getEffectType() == "Constant") {
 		if (fFB.getFfbSize().getDirection() > 100) {
@@ -85,26 +87,23 @@ void updateCode() {
 		axisX = axisX + ffbStrength;
 		ffbStrength = 0;
 	}
-	//printf("\n%f", sw.ElapsedMilliseconds());
 	mTV.inputLogic(rInput, axisX, axisY, axisZ, axisRX, isButton1Clicked, isButton2Clicked, isButton3Clicked, fR.result(1), fR.result(2), fR.result(3), fR.result(4), fR.result(5), fR.result(6), fR.result(7), fR.result(8), fR.result(9), fR.result(10), fR.result(11), fR.result(12), fR.result(13), fR.result(14), fR.result(15), fR.result(17), fR.result(18), fR.result(19));
 	vJ.feedDevice(1, axisX, axisY, axisZ, axisRX, isButton1Clicked, isButton2Clicked, isButton3Clicked);
-	
-	//printf("\n%s", ffbSize.EffectType());
 }
-
+//Creates callback on window, registers raw input devices and processes mouse and keyboard input
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (Msg)
 	{
 	case WM_CREATE:
-		//Creating new twi raw input devices
+		//Creating new raw input devices
 			RAWINPUTDEVICE m_Rid[2];
 			//Keyboard
 			m_Rid[0].usUsagePage = 1;
 			m_Rid[0].usUsage = 6;
 			m_Rid[0].dwFlags = RIDEV_INPUTSINK;
 			m_Rid[0].hwndTarget = hwnd;
-			// Mouse
+			//Mouse
 			m_Rid[1].usUsagePage = 1;
 			m_Rid[1].usUsage = 2;
 			m_Rid[1].dwFlags = RIDEV_INPUTSINK;
@@ -113,7 +112,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 
 		break;
 	case WM_INPUT:
-		//Then window recives input message get data for rinput device and run mouse logic function.
+		//When window recives input message get data for rinput device and run mouse logic function.
 			rInput.getData(lParam);
 			mTV.mouseLogic(rInput, axisX, fR.result(0), fR.result(20), fR.result(16));
 		break;
@@ -126,7 +125,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	}
 	return 0;
 }
-
+//Main function
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	//invisible window initialization to be able to recive raw input even if the window is not focused.

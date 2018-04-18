@@ -3,7 +3,7 @@
 #include <math.h>
 #define STEERING_MIN 16384
 #define STEERING_MAX -16384
-
+//Function responsible for getting and modifying vars for throttle, break, clutch.
 void MouseToVjoy::inputLogic(CInputDevices input, INT &axisX, INT &axisY, INT &axisZ, INT &axisRX, BOOL &isButton1Clicked, BOOL &isButton2Clicked, BOOL &isButton3Clicked, DOUBLE attackTimeThrottle, DOUBLE releaseTimeThrottle, DOUBLE attackTimeBreak, DOUBLE releaseTimeBreak, DOUBLE attackTimeClutch, DOUBLE releaseTimeClutch, INT throttleKey, INT breakKey, INT clutchKey, INT gearShiftUpKey, INT gearShiftDownKey, INT handBrakeKey, INT mouseLockKey, INT mouseCenterKey, INT useMouse, DOUBLE accelerationThrottle, DOUBLE accelerationBreak, DOUBLE accelerationClutch) {
 	if (useMouse == 1) {
 		if (input.isLeftMouseButtonDown() && axisY < 32767) {
@@ -69,7 +69,7 @@ void MouseToVjoy::inputLogic(CInputDevices input, INT &axisX, INT &axisY, INT &a
 	}
 
 }
-
+//Function responsible for getting and modifying vars for steering wheel.
 void MouseToVjoy::mouseLogic(CInputDevices input, INT &X, DOUBLE sensitivity, DOUBLE sensitivityCenterReduction, INT useCenterReduction){
 	//vjoy max value is 0-32767 to make it easier to scale linear reduction/acceleration I subtract half of it so 16384 to make it -16384 to 16384.
 	X = X - 16384;

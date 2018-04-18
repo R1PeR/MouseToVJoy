@@ -1,7 +1,5 @@
 #include "vjoy.h"
-
-
-
+//Tests if the driver version is equal to dll version.
 int VJoy::testDriver() {
 	printf("Mouse to vJoy Feeder\n");
 	printf("==================================\n");
@@ -28,7 +26,7 @@ int VJoy::testDriver() {
 	printf("OK - Driver and DLL match\n");
 
 }
-
+//Tests if UINT iInterface is existing.
 int VJoy::testVirtualDevices(UINT iInterface) {
 	// Get the state of the requested device (iInterface)
 	_status = GetVJDStatus(iInterface);
@@ -53,7 +51,7 @@ Cannot continue\n", iInterface);
 		return -1;
 	};
 }
-
+//If UINT iInterface is existing, tries to accuire it.
 int VJoy::accuireDevice(UINT iInterface) {
 	// Acquire the target if not already owned
 	if ((_status == VJD_STAT_OWN) || \
@@ -67,7 +65,7 @@ int VJoy::accuireDevice(UINT iInterface) {
 		printf("Acquired: vJoy device number %d.\n", iInterface);
 	}
 }
-
+//If UINT iInterface exist, enable FFB to device.
 int VJoy::enableFFB(UINT iInterface) {
 	// Acquire the target if not already owned
 	BOOL Ffbstarted = FfbStart(iInterface);
@@ -79,8 +77,9 @@ int VJoy::enableFFB(UINT iInterface) {
 		printf("Started FFB on vJoy device number %d - OK\n", iInterface);
 	return 0;
 }
-
+//When UINT iInterface is accuired, feeds vars X Y Z RX to Axises X Y Z RX.
 void VJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1, BOOL BUTTON2, BOOL BUTTON3) {
+	//Reports all axies to virtual joystick.
 	_iReport.bDevice = iInterface;
 	_iReport.wAxisX = X;
 	_iReport.wAxisY = Y;

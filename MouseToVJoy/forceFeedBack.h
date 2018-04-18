@@ -27,11 +27,15 @@ public:
 	int twosCompByte2Int(BYTE in);
 	// Convert One-Byte 2's complement input to integer
 	int twosCompWord2Int(WORD in);
+	// Returns private _ffbSize struct
 	FFBSIZE getFfbSize() { return _ffbSize; };
+	// Callback used to get ffb data
 	void CALLBACK ffbToVJoy(PVOID data, PVOID userData);
 private:
+	// Names of effects
 	LPCTSTR _ffbEffectName[13] = { "NONE", "Constant Force", "Ramp", "Square", "Sine", "Triangle", "Sawtooth Up",
 		"Sawtooth Down", "Spring", "Damper", "Inertia", "Friction", "Custom Force" };
+	// Struct to store ffb data
 	FFBSIZE _ffbSize;
 };
 #endif
