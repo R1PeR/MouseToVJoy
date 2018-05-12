@@ -16,14 +16,11 @@ void CInputDevices::getData(LPARAM lParam)
 
 	// The mouse has not been tested extensively,
 	// but I believe it works.
+	_mouseXChange = raw->data.mouse.lLastX;
+	_mouseYChange = raw->data.mouse.lLastY;
 	if (raw->header.dwType == RIM_TYPEMOUSE)
 	{
 		// Get values from the mouse member (of type RAWMOUSE)
-		_mouseXChange = raw->data.mouse.lLastX;
-		_mouseYChange = raw->data.mouse.lLastY;
-
-
-
 		bool bStateDown = raw->data.mouse.usButtonFlags & RI_MOUSE_LEFT_BUTTON_DOWN;
 		bool bStateUp = raw->data.mouse.usButtonFlags & RI_MOUSE_LEFT_BUTTON_UP;
 
@@ -111,8 +108,6 @@ void CInputDevices::getData(LPARAM lParam)
 		// how I have set things up so far.
 
 	}
-
-
 }
 
 bool CInputDevices::checkKeyPress(bool isLastKeyState, bool isThisKeyState)
