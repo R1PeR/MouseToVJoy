@@ -74,16 +74,16 @@ void updateCode() {
 	Sleep(2);
 	if (fFB.getFfbSize().getEffectType() == "Constant") {
 		if (fFB.getFfbSize().getDirection() > 100) {
-			ffbStrength = (fFB.getFfbSize().getMagnitude())*(sw.elapsedMilliseconds()*0.0001);
+			ffbStrength = (fFB.getFfbSize().getMagnitude())*(sw.elapsedMilliseconds()*0.001);
 		}		
 		else {
-			ffbStrength = -(fFB.getFfbSize().getMagnitude())*(sw.elapsedMilliseconds()*0.0001);
+			ffbStrength = -(fFB.getFfbSize().getMagnitude())*(sw.elapsedMilliseconds()*0.001);
 		}
 	}
 	if (fFB.getFfbSize().getEffectType() == "Period") {
-		ffbStrength = (fFB.getFfbSize().getOffset()*0.5)*(sw.elapsedMilliseconds()*0.0001);
+		ffbStrength = (fFB.getFfbSize().getOffset()*0.5)*(sw.elapsedMilliseconds()*0.001);
 	}
-	if (fR.result(21) == 1) {
+		if (fR.result(21) == 1) {
 		axisX = axisX + ffbStrength;
 		ffbStrength = 0;
 	}
