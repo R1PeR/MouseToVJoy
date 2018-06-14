@@ -19,6 +19,8 @@ Useful for racing games, created especially for Assetto Corsa to remove traction
 Some games I tested it with: Assetto Corsa, Live For Speed, Rfactor.
 
 ## Release History
+* 1.66
+    * FIX: Issue with self moving steering wheel.
 * 1.65
     * FIX: 'ForceFeedback' not working.
 * 1.64
