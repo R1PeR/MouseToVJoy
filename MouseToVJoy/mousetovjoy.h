@@ -17,6 +17,6 @@ private:
 	//**Gets if the Center Reduction is used, when used function mouselogic() uses linear algorithm to calculate sensitivity, the more the joystick is centered the sloweer the sensitivity(max 1.0 of the sensitivity.), the further the faster the sensitivity(max = CenterReduction value * Sensitivity )
 	//bool _useCenterReduction;
 	//define center multiplier to be able to modify it during function.
-	DOUBLE _centerMultiplier;
+	DOUBLE _centerMultiplier = 1.0;
 };
 #endif
