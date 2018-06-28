@@ -11,6 +11,7 @@
 #include "stopwatch.h"
 #include "forcefeedback.h"
 
+int wheelPos = 0;
 using namespace std;
 using win32::Stopwatch;
 //Instantiate classes
@@ -40,7 +41,7 @@ void initializationCode() {
 	FfbRegisterGenCB(FFBCALLBACK, &DEV_ID);//Registed what function to run on forcefeedback call.
 	string configFileName = "config.txt";
 	//what strings to look for in config file.
-	string checkArray[22] = { "Sensitivity", "AttackTimeThrottle", "ReleaseTimeThrottle", "AttackTimeBreak", "ReleaseTimeBreak", "AttackTimeClutch", "ReleaseTimeClutch", "ThrottleKey", "BreakKey", "ClutchKey", "GearShiftUpKey", "GearShiftDownKey", "HandBrakeKey", "MouseLockKey", "MouseCenterKey", "UseMouse","UseCenterReduction" , "AccelerationThrottle", "AccelerationBreak", "AccelerationClutch", "CenterMultiplier", "UseForceFeedback" };
+	string checkArray[23] = { "Sensitivity", "AttackTimeThrottle", "ReleaseTimeThrottle", "AttackTimeBreak", "ReleaseTimeBreak", "AttackTimeClutch", "ReleaseTimeClutch", "ThrottleKey", "BreakKey", "ClutchKey", "GearShiftUpKey", "GearShiftDownKey", "HandBrakeKey", "MouseLockKey", "MouseCenterKey", "UseMouse","UseCenterReduction" , "AccelerationThrottle", "AccelerationBreak", "AccelerationClutch", "CenterMultiplier", "UseForceFeedback", "UseWheelAsShifter" };
 	fR.newFile(configFileName, checkArray);//read configFileName and look for checkArray
 	//Printing basic menu with assigned values
 	printf("==================================\n");
@@ -62,6 +63,7 @@ void initializationCode() {
 	printf("Use Mouse = %d \n", (int)fR.result(15));
 	printf("Use Center Reduction = %d \n", (int)fR.result(16));
 	printf("Use Force Feedback = %d \n", (int)fR.result(21));
+	printf("Use Mouse Wheel As Shifter = %d \n", (int)fR.result(22));
 	printf("Acceleration Throttle = %.2f \n", fR.result(17));
 	printf("Acceleration Break = %.2f \n", fR.result(18));
 	printf("Acceleration Clutch = %.2f \n", fR.result(19));
@@ -71,7 +73,7 @@ void initializationCode() {
 //Code that is run every time program gets an message from enviroment(mouse movement, mouse click etc.), manages input logic and feeding device.
 //Update code is sleeping for 2 miliseconds to make is less cpu demanding
 void updateCode() {
-	Sleep(2);
+	Sleep(20);
 	if (fFB.getFfbSize().getEffectType() == "Constant") {
 		if (fFB.getFfbSize().getDirection() > 100) {
 			ffbStrength = (fFB.getFfbSize().getMagnitude())*(sw.elapsedMilliseconds()*0.001);
@@ -83,12 +85,14 @@ void updateCode() {
 	if (fFB.getFfbSize().getEffectType() == "Period") {
 		ffbStrength = (fFB.getFfbSize().getOffset()*0.5)*(sw.elapsedMilliseconds()*0.001);
 	}
-		if (fR.result(21) == 1) {
+	if (fR.result(21) == 1) {
 		axisX = axisX + ffbStrength;
 		ffbStrength = 0;
 	}
-	mTV.inputLogic(rInput, axisX, axisY, axisZ, axisRX, isButton1Clicked, isButton2Clicked, isButton3Clicked, fR.result(1), fR.result(2), fR.result(3), fR.result(4), fR.result(5), fR.result(6), fR.result(7), fR.result(8), fR.result(9), fR.result(10), fR.result(11), fR.result(12), fR.result(13), fR.result(14), fR.result(15), fR.result(17), fR.result(18), fR.result(19));
+	mTV.inputLogic(rInput, axisX, axisY, axisZ, axisRX, isButton1Clicked, isButton2Clicked, isButton3Clicked, fR.result(1), fR.result(2), fR.result(3), fR.result(4), fR.result(5), fR.result(6), fR.result(7), fR.result(8), fR.result(9), fR.result(10), fR.result(11), fR.result(12), fR.result(13), fR.result(14), fR.result(15), fR.result(17), fR.result(18), fR.result(19), fR.result(22), sw.elapsedMilliseconds());
 	vJ.feedDevice(1, axisX, axisY, axisZ, axisRX, isButton1Clicked, isButton2Clicked, isButton3Clicked);
+	isButton1Clicked = false;
+	isButton2Clicked = false;
 }
 //Creates callback on window, registers raw input devices and processes mouse and keyboard input
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam)
@@ -114,7 +118,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	case WM_INPUT:
 		//When window recives input message get data for rinput device and run mouse logic function.
 			rInput.getData(lParam);
-			mTV.mouseLogic(rInput, axisX, fR.result(0), fR.result(20), fR.result(16));
+			if (rInput.isMouseWheelUp())isButton1Clicked = true;
+			if (rInput.isMouseWheelDown())isButton2Clicked = true;
+			mTV.mouseLogic(rInput, axisX, fR.result(0), fR.result(20), fR.result(16), isButton1Clicked, isButton2Clicked, fR.result(22));
 		break;
 	case WM_CLOSE:
 		PostQuitMessage(0);

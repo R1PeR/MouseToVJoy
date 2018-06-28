@@ -4,7 +4,7 @@ int VJoy::testDriver() {
 	printf("Mouse to vJoy Feeder\n");
 	printf("==================================\n");
 	printf("Author: R1per\n");
-	printf("Version: 1.68\n");
+	printf("Version: 1.7\n");
 	// Get the driver attributes (Vendor ID, Product ID, Version Number)
 	if (!vJoyEnabled())
 	{
@@ -88,12 +88,24 @@ void VJoy::feedDevice(UINT iInterface, INT X, INT Y, INT Z, INT RX, BOOL BUTTON1
 	if (BUTTON1) _iReport.lButtons |= 0x1; else _iReport.lButtons &= 0xFE;
 	if (BUTTON2) _iReport.lButtons |= 0x2; else _iReport.lButtons &= 0xFD;
 	if (BUTTON3) _iReport.lButtons |= 0x4; else _iReport.lButtons &= 0xFB;
-	if (!UpdateVJD(iInterface, (PVOID)&_iReport))
+
+
+	PVOID pPositionMessage = (PVOID)(&_iReport);
+	UpdateVJD(iInterface, pPositionMessage);
+
+
+
+
+
+
+
+
+
+/*	if (!)
 	{
 		printf("Feeding vJoy device number %d failed - try to enable device then press enter\n", iInterface);
 		getchar();
 		AcquireVJD(iInterface);
-	}
+	}*/
 }
-
 

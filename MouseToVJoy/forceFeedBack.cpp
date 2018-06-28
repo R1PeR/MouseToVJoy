@@ -253,7 +253,7 @@ void CALLBACK ForceFeedBack::ffbToVJoy(PVOID data, PVOID userData)
 	FFB_EFF_CONST Effect;
 	if (ERROR_SUCCESS == Ffb_h_Eff_Const((FFB_DATA *)data, &Effect))
 	{
-
+		
 	};
 #pragma endregion
 #pragma region PID Device Control
@@ -329,8 +329,9 @@ void CALLBACK ForceFeedBack::ffbToVJoy(PVOID data, PVOID userData)
 	FFB_EFF_CONSTANT ConstantEffect;
 	if (ERROR_SUCCESS == Ffb_h_Eff_Constant((FFB_DATA *)data, &ConstantEffect))
 	{
+
 		_ffbSize.setEffectType("Constant");
-		_ffbSize.setMagnitude(ConstantEffect.Magnitude);
+		_ffbSize.setMagnitude((INT16)ConstantEffect.Magnitude);
 		_ffbSize.setDirection(polar2Deg(Effect.Direction));
 		_ffbSize.setOffset(0);
 		_ffbSize.setPeriod(0);

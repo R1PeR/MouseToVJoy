@@ -16,10 +16,12 @@ MouseCenterKey = 0
 UseMouse = 1
 UseCenterReduction = 1
 UseForceFeedback = 1
+UseWheelAsShifter = 1
 AccelerationThrottle = 1.01
 AccelerationBreak = 1.01
 AccelerationClutch = 1.01
-CenterMultiplier = 1.2
+CenterMultiplier = 2
+
 
 Use keycodes from 0 TO 165
 http://keycode.info

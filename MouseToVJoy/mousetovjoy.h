@@ -2,15 +2,16 @@
 #ifndef MOUSETOVJOY_H
 #define MOUSETOVJOY_H
 #include "input.h"
-
+#include "vjoy.h"
+#include "stopwatch.h"
 /* Basic funtion that gets data, then processes it and modifies inputs.*/
 
 class MouseToVjoy {
 public:
 	//Function responsible for getting and modifying vars for throttle, break, clutch.
-	void MouseToVjoy::inputLogic(CInputDevices input, INT &axisX, INT &axisY, INT &axisZ, INT &axisRX, BOOL &isButton1Clicked, BOOL &isButton2Clicked, BOOL &isButton3Clicked, DOUBLE attackTimeThrottle, DOUBLE releaseTimeThrottle, DOUBLE attackTimeBreak, DOUBLE releaseTimeBreak, DOUBLE attackTimeClutch, DOUBLE releaseTimeClutch, INT throttleKey, INT breakKey, INT clutchKey, INT gearShiftUpKey, INT gearShiftDownKey, INT handBrakeKey, INT mouseLockKey, INT mouseCenterKey, INT useMouse, DOUBLE accelerationThrottle, DOUBLE accelerationBreak, DOUBLE accelerationClutch);
+	void MouseToVjoy::inputLogic(CInputDevices input, INT &axisX, INT &axisY, INT &axisZ, INT &axisRX, BOOL &isButton1Clicked, BOOL &isButton2Clicked, BOOL &isButton3Clicked, DOUBLE attackTimeThrottle, DOUBLE releaseTimeThrottle, DOUBLE attackTimeBreak, DOUBLE releaseTimeBreak, DOUBLE attackTimeClutch, DOUBLE releaseTimeClutch, INT throttleKey, INT breakKey, INT clutchKey, INT gearShiftUpKey, INT gearShiftDownKey, INT handBrakeKey, INT mouseLockKey, INT mouseCenterKey, INT useMouse, DOUBLE accelerationThrottle, DOUBLE accelerationBreak, DOUBLE accelerationClutch, INT useWheelAsShifter, DOUBLE deltaTime);
 	//Function responsible for getting and modifying vars for steering wheel.
-	void MouseToVjoy::mouseLogic(CInputDevices input, INT &axisX, DOUBLE sensitivity, DOUBLE sensitivityCenterReduction, INT useCenterReduction);
+	void MouseToVjoy::mouseLogic(CInputDevices input, INT &axisX, DOUBLE sensitivity, DOUBLE sensitivityCenterReduction, INT useCenterReduction, BOOL &isButton1Clicked, BOOL &isButton2Clicked, INT useWheelAsShifter);
 private:
 	//Gets if the Cursor is locked then, sets cursor in cords 0,0 every input.
 	bool _isCursorLocked;

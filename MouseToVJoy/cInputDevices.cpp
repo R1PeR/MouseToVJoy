@@ -18,12 +18,23 @@ void CInputDevices::getData(LPARAM lParam)
 	// but I believe it works.
 	_mouseXChange = raw->data.mouse.lLastX;
 	_mouseYChange = raw->data.mouse.lLastY;
+	_mouseZChange = (short)raw->data.mouse.usButtonData;
+	if (_mouseZChange / 120 == 1) {
+		_isMouseWheelUp = true;
+	}
+	else { _isMouseWheelUp = false; };
+	if (_mouseZChange / -120 == 1) {
+		_isMouseWheelDown = true;
+	}
+	else { _isMouseWheelDown = false; };
+
 	if (raw->header.dwType == RIM_TYPEMOUSE)
 	{
+		
+
 		// Get values from the mouse member (of type RAWMOUSE)
 		bool bStateDown = raw->data.mouse.usButtonFlags & RI_MOUSE_LEFT_BUTTON_DOWN;
 		bool bStateUp = raw->data.mouse.usButtonFlags & RI_MOUSE_LEFT_BUTTON_UP;
-
 		if (bStateDown == true && bStateUp == false)
 		{
 			_isLeftMouseButtonPressed = true;
@@ -44,7 +55,7 @@ void CInputDevices::getData(LPARAM lParam)
 		{
 			_isRightMouseButtonPressed = true;
 			_isKeyboardButtonPressed[0x02] = true;
-			
+
 		}
 
 		if (bStateUpTwo == true)
@@ -85,7 +96,7 @@ void CInputDevices::getData(LPARAM lParam)
 				// However our alphabet or array of booleans that
 				// represent it, begins at 0 and is only 25 in length.
 				// So i itself is the appropritate index.
-				pbToKey = &_isKeyboardButtonPressed[i+0x01];
+				pbToKey = &_isKeyboardButtonPressed[i + 0x01];
 
 				// At this point we have assigned our boolean pointer variable
 				// a new address which is whatever index i would be accessing.

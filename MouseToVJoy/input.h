@@ -29,7 +29,6 @@ public:
 	// I believe this is smarter than calling it every frame in a game loop.
 
 	void getData(LPARAM lParam);
-
 	// This should be self-explanatory. Depending on which function
 	// you call, you will get true or false about the state of the mouse button.
 	// The code in the source file may be a bit difficult to follow,
@@ -38,13 +37,15 @@ public:
 
 	bool           isLeftMouseButtonDown() { return _isLeftMouseButtonPressed; }
 	bool           isRightMouseButtonDown() { return _isRightMouseButtonPressed; }
+	bool		   isMouseWheelUp() { return _isMouseWheelUp; }
+	bool		   isMouseWheelDown() { return _isMouseWheelDown; }
 
 	// These functions return values that are relative to the change in position
 	// of your mouse.
 
 	int            getMouseChangeX() { return _mouseXChange; }
 	int            getMouseChangeY() { return _mouseYChange; }
-
+	int            getMouseChangeZ() { return _mouseZChange; }
 	// OPTIONALLY:
 	// To obtain exact mouse coords check the uMsg in your Application's MsgProc
 	// for WM_MOUSEMOVE, and use HIWORD() LOWORD() functions to extract the mouse X,Y
@@ -75,11 +76,14 @@ private:
 	// Should be obvious what functions return these two values.
 	int            _mouseXChange;
 	int            _mouseYChange;
+	int			   _mouseZChange;
 
 	// Again, should be obvious what functions use these. 
 	// LMB = Left Mouse Button. RMB = Right Mouse Button
 	bool           _isLeftMouseButtonPressed;
 	bool           _isRightMouseButtonPressed;
+	bool           _isMouseWheelUp;
+	bool           _isMouseWheelDown;
 
 	// Notice how I use an array of bools rather than having a separate bool for each.
 	// In the source file you will see how my enumerations come into play for knowing what index

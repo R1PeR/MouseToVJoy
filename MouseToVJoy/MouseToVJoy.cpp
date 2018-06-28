@@ -4,40 +4,42 @@
 #define STEERING_MAX 16384
 #define STEERING_MIN -16384
 //Function responsible for getting and modifying vars for throttle, break, clutch.
-void MouseToVjoy::inputLogic(CInputDevices input, INT &axisX, INT &axisY, INT &axisZ, INT &axisRX, BOOL &isButton1Clicked, BOOL &isButton2Clicked, BOOL &isButton3Clicked, DOUBLE attackTimeThrottle, DOUBLE releaseTimeThrottle, DOUBLE attackTimeBreak, DOUBLE releaseTimeBreak, DOUBLE attackTimeClutch, DOUBLE releaseTimeClutch, INT throttleKey, INT breakKey, INT clutchKey, INT gearShiftUpKey, INT gearShiftDownKey, INT handBrakeKey, INT mouseLockKey, INT mouseCenterKey, INT useMouse, DOUBLE accelerationThrottle, DOUBLE accelerationBreak, DOUBLE accelerationClutch) {
+void MouseToVjoy::inputLogic(CInputDevices input, INT &axisX, INT &axisY, INT &axisZ, INT &axisRX, BOOL &isButton1Clicked, BOOL &isButton2Clicked, BOOL &isButton3Clicked, DOUBLE attackTimeThrottle, DOUBLE releaseTimeThrottle, DOUBLE attackTimeBreak, DOUBLE releaseTimeBreak, DOUBLE attackTimeClutch, DOUBLE releaseTimeClutch, INT throttleKey, INT breakKey, INT clutchKey, INT gearShiftUpKey, INT gearShiftDownKey, INT handBrakeKey, INT mouseLockKey, INT mouseCenterKey, INT useMouse, DOUBLE accelerationThrottle, DOUBLE accelerationBreak, DOUBLE accelerationClutch, INT useWheelAsShifter, DOUBLE deltaTime) {
+	
 	if (useMouse == 1) {
 		if (input.isLeftMouseButtonDown() && axisY < 32767) {
-			axisY = (axisY + attackTimeThrottle ) * accelerationThrottle;
+			axisY = (axisY + (attackTimeThrottle*deltaTime)) * accelerationThrottle;
 		}
 		if (!input.isLeftMouseButtonDown() && axisY > 1) {
-			axisY = (axisY - releaseTimeThrottle) / accelerationThrottle;;
+			axisY = (axisY - (releaseTimeThrottle*deltaTime)) / accelerationThrottle;;
 		}
 		if (input.isRightMouseButtonDown() && axisZ < 32767) {
-			axisZ = (axisZ + attackTimeBreak) * accelerationBreak;
+			axisZ = (axisZ + (attackTimeBreak*deltaTime)) * accelerationBreak;
 		}
 		if (!input.isRightMouseButtonDown() && axisZ > 1) {
-			axisZ = (axisZ - releaseTimeBreak) / accelerationBreak;
+			axisZ = (axisZ - (releaseTimeBreak*deltaTime)) / accelerationBreak;
 		}
 	}
 	else {
 		if (input.isAlphabeticKeyDown(throttleKey) && axisY < 32767) {
-			axisY = (axisY + attackTimeThrottle) * accelerationThrottle;
+			axisY = (axisY + (attackTimeThrottle*deltaTime)) * accelerationThrottle;
 		}
 		if (!input.isAlphabeticKeyDown(throttleKey) && axisY > 1) {
-			axisY = (axisY - attackTimeThrottle) / accelerationThrottle;
+			axisY = (axisY - (releaseTimeThrottle*deltaTime)) / accelerationThrottle;
 		}
 		if (input.isAlphabeticKeyDown(breakKey) && axisZ < 32767) {
-			axisZ = (axisZ + attackTimeThrottle) * accelerationBreak;
+			axisZ = (axisZ + (attackTimeBreak*deltaTime)) * accelerationBreak;
 		}
 		if (!input.isAlphabeticKeyDown(breakKey) && axisZ > 1) {
-			axisZ = (axisZ - attackTimeThrottle) / accelerationBreak;
+			axisZ = (axisZ - (releaseTimeBreak*deltaTime)) / accelerationBreak;
 		}
 	}
+
 	if (input.isAlphabeticKeyDown(clutchKey) && axisRX < 32767) {
-		axisRX = (axisRX + attackTimeClutch) * accelerationClutch;
+		axisRX = (axisRX + (attackTimeClutch*deltaTime)) * accelerationClutch;
 	}
 	if (!input.isAlphabeticKeyDown(clutchKey) && axisRX > 1) {
-		axisRX = (axisRX - releaseTimeClutch) / accelerationClutch;
+		axisRX = (axisRX - (releaseTimeClutch*deltaTime)) / accelerationClutch;
 	}
 	if (input.isAlphabeticKeyDown(mouseLockKey)) {
 		SleepEx(250, !(input.isAlphabeticKeyDown(mouseLockKey)));
@@ -52,14 +54,16 @@ void MouseToVjoy::inputLogic(CInputDevices input, INT &axisX, INT &axisY, INT &a
 		SleepEx(250, !(input.isAlphabeticKeyDown(mouseCenterKey)));
 		axisX = (32766 / 2);
 	}
-	if (input.isAlphabeticKeyDown(gearShiftUpKey)) {
-		isButton1Clicked = true;
+	if (useWheelAsShifter == 0) {
+		if (input.isAlphabeticKeyDown(gearShiftUpKey)) {
+			isButton1Clicked = true;
+		}
+		else isButton1Clicked = false;
+		if (input.isAlphabeticKeyDown(gearShiftDownKey)) {
+			isButton2Clicked = true;
+		}
+		else isButton2Clicked = false;
 	}
-	else isButton1Clicked = false;
-	if (input.isAlphabeticKeyDown(gearShiftDownKey)) {
-		isButton2Clicked = true;
-	}
-	else isButton2Clicked = false;
 	if (input.isAlphabeticKeyDown(handBrakeKey)){
 		isButton3Clicked = true;
 	}
@@ -70,7 +74,7 @@ void MouseToVjoy::inputLogic(CInputDevices input, INT &axisX, INT &axisY, INT &a
 
 }
 //Function responsible for getting and modifying vars for steering wheel.
-void MouseToVjoy::mouseLogic(CInputDevices input, INT &X, DOUBLE sensitivity, DOUBLE sensitivityCenterReduction, INT useCenterReduction){
+void MouseToVjoy::mouseLogic(CInputDevices input, INT &X, DOUBLE sensitivity, DOUBLE sensitivityCenterReduction, INT useCenterReduction, BOOL &isButton1Clicked, BOOL &isButton2Clicked, INT useWheelAsShifter){
 	//vjoy max value is 0-32767 to make it easier to scale linear reduction/acceleration I subtract half of it so 16384 to make it -16384 to 16384.
 	X = X - 16384;
 	if (X > 0) {
@@ -93,4 +97,15 @@ void MouseToVjoy::mouseLogic(CInputDevices input, INT &X, DOUBLE sensitivity, DO
 		X = -16384;
 	}
 	X += 16384;
+	if (useWheelAsShifter == 1) {		
+		if (input.isMouseWheelUp()) {
+			//printf("UP\n");
+		}
+		else ;
+		if (input.isMouseWheelDown()) {
+			//printf("DOWN\n");
+			
+		}
+		else ;
+	}
 };
