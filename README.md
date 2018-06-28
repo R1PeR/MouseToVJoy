@@ -19,6 +19,8 @@ Useful for racing games, created especially for Assetto Corsa to remove traction
 Some games I tested it with: Assetto Corsa, Live For Speed, Rfactor.
 
 ## Release History
+* 1.68
+    * FIX: 'ForceFeedback' not working.
 * 1.67
     * FIX: Issue with center reduction not working
 * 1.66
