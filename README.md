@@ -19,10 +19,13 @@ Useful for racing games, created especially for Assetto Corsa to remove traction
 Some games I tested it with: Assetto Corsa, Live For Speed, Rfactor.
 
 ## Release History
+* 1.7
+    * ADD: Support for 'ForceFeedback' on Assetto Corsa.
+    * ADD: Ability to use mouse wheel as sequential gearbox.
 * 1.68
     * FIX: 'ForceFeedback' not working.
 * 1.67
-    * FIX: Issue with center reduction not working
+    * FIX: Issue with center reduction not working.
 * 1.66
     * FIX: Issue with self moving steering wheel.
 * 1.65
@@ -197,6 +200,13 @@ Whenever to use forcefeedback.
 
 E.g. UseForceFeedback = 1
 
+### UseWheelAsShifter
+
+Whenever to use mouse wheel as a sequential shifter.
+Mouse wheel up for next gear and mouse wheel down for lower gear.
+0 for Disable, 1 for Enable.
+
+E.g. UseWheelAsShifter = 1
 
 ### AccelerationThrottle
 
