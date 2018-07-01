@@ -23,13 +23,13 @@ Some games I tested it with: Assetto Corsa, Live For Speed, Rfactor.
     * ADD: Support for 'ForceFeedback' on Assetto Corsa.
     * ADD: `Use Wheel as Shifter`.
 * 1.68
-    * FIX: 'ForceFeedback' not working.
+    * FIX: `ForceFeedback` not working.
 * 1.67
     * FIX: Issue with center reduction not working.
 * 1.66
     * FIX: Issue with self moving steering wheel.
 * 1.65
-    * FIX: 'ForceFeedback' not working.
+    * FIX: `ForceFeedback` not working.
 * 1.64
     * ADD: Command line support, '-noconsole' to launch without console.
     * FIX: Code structure, made it more pleasant to read.
