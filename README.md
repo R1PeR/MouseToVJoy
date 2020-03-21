@@ -1,3 +1,4 @@
+#03.20.2020 New version of program avaliable on https://r1per.itch.io/mtvj
 # MouseToVJoy
 > Application that converts mouse/keyboard input to vjoy output.
 
